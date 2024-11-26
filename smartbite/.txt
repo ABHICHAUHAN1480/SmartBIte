@@ -1,0 +1,187 @@
+   
+ theme:-dark(zinc ,blackish    etc)
+     
+   
+-------------------------------------------------------------------------------   
+   Pages
+   1.Login :
+      username
+      password
+   ---------------------------------
+   2.sgin in 
+              email id
+              Name
+              username
+              set password
+              confirm password
+   ---------------------------
+   3.Home:-
+            Navbar
+            section 1:-data show how much protein ,fats crabs etc he consume (left-day ,right-week )
+            section 2:-shows Meal of the  day if he plans other wise shows No Meals planned 
+                        (shows based upon the time  like breakfast, lunch and dinner )
+                         
+            sections :- path to different pages making the specific sec for diff features
+                   sec1:-path to mood based suggestions
+                   sec2:path to add inventory
+                   sec3:path to meal planner
+ 
+
+            footer       
+     ---------------------------------------------------
+   4.Mood meal suggestion :-
+                    Navbar
+                    section:-
+                            sec1:-  taking inputs from user from diff options and then join them in one and give the recipe
+                            sec2:-  search the recipe based on ingredients in inventory or users input ingredients
+                            sec3:-  wants to add in meal plan for the day or week 
+
+                            
+                            
+                    footer     
+
+   ------------------------------------------------------                       
+   5.Add inventory:-
+                    Navbar
+
+                    section:-
+                             sec1:-div where user can inputs the data (image recognition if failed or incorrect   then from text ) 
+                              shows which items are present
+                    footer
+   ------------------------------------------
+   6. Meal planner:-
+                   Navbar
+                   sections:-
+                              sec1:-shows the recipes of the day if  he plans meal plan for that day
+                              sec 2:-shows the all the days of the week if clicks then direct to next page with the meal plan of that day
+                   footer
+   ---------------------------------------------
+   7. meals of the day:-
+                                    
+---------------------------------------------------------------------------------------------------------
+   constants:-
+        rings
+        loader
+
+---------------------------------------------------------------------------------------------------     
+   components
+   1.Navbar:_
+             Home ,COntact us,LOG Out
+   2.Nuterients ring div
+   3.Meals of the any day of the week 
+   3.footer
+---------------------------------------------------------------
+
+
+
+
+  user Data:
+      1.   email ,password, username ,id
+      2.   inventory items details:-which item, expiry date, quantity,                    
+      3.   which recipe or what he eats to calculates the proteins fat etc to show in the activity bar
+
+--------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// In this section, we set the user authentication, user and app ID, model details, and the URL
+// of the image we want as an input. Change these strings to run your own example.
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Your PAT (Personal Access Token) can be found in the Account's Security section
+const PAT = 'e9626480232e47ca916b980472bfac15';
+// Specify the correct user_id/app_id pairings
+// Since you're making inferences outside your app's scope
+const USER_ID = 'clarifai';       
+const APP_ID = 'main';
+// Change these to whatever model and image URL you want to use
+const MODEL_ID = 'general-image-recognition';
+const MODEL_VERSION_ID = 'aa7f35c01e0642fda5cf400f543e7c40';    
+const IMAGE_URL = 'https://samples.clarifai.com/metro-north.jpg';
+
+///////////////////////////////////////////////////////////////////////////////////
+// YOU DO NOT NEED TO CHANGE ANYTHING BELOW THIS LINE TO RUN THIS EXAMPLE
+///////////////////////////////////////////////////////////////////////////////////
+
+const raw = JSON.stringify({
+    "user_app_id": {
+        "user_id": USER_ID,
+        "app_id": APP_ID
+    },
+    "inputs": [
+        {
+            "data": {
+                "image": {
+                    "url": IMAGE_URL
+                }
+            }
+        }
+    ]
+});
+
+const requestOptions = {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Key ' + PAT
+    },
+    body: raw
+};
+
+// NOTE: MODEL_VERSION_ID is optional, you can also call prediction with the MODEL_ID only
+// https://api.clarifai.com/v2/models/{YOUR_MODEL_ID}/outputs
+// this will default to the latest version_id
+
+fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+e9626480232e47ca916b980472bfac15
+
+
+
+
+
+
+
+meal-1/3 partion,one side inputuser and then other 2side outputsforuser 
+     addfrominv the provide a list   
+
+
+profile :- edit ,profile 
+
+
+
+const moodOptions = [
+  { mood: "Happy", cuisine: "American", mealType: "Dessert" },
+  { mood: "Sad", cuisine: "Italian", mealType: "Soup" },
+  { mood: "Energetic", cuisine: "Mediterranean", mealType: "High Protein" },
+  { mood: "Romantic", cuisine: "French", mealType: "Dinner" },
+  { mood: "Comforted", cuisine: "Southern", mealType: "Comfort Food" },
+  { mood: "Adventurous", cuisine: "Indian", mealType: "Fusion" },
+  { mood: "Relaxed", cuisine: "Japanese", mealType: "Light" },
+  { mood: "Motivated", cuisine: "Healthy", mealType: "Protein-packed" },
+  { mood: "Sophisticated", cuisine: "Italian", mealType: "Gourmet" },
+  { mood: "Cozy", cuisine: "American", mealType: "Stew" },
+  { mood: "Refreshing", cuisine: "Vegan", mealType: "Salads" },
+  { mood: "Indulgent", cuisine: "American", mealType: "Rich, Decadent" },
+
+  { mood: "Playful", cuisine: "Mexican", mealType: "Tacos" },
+ 
+];
+
+
+
+
+638236
+643394
+647799
