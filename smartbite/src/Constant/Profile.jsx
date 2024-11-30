@@ -35,7 +35,7 @@ const [setshowallergy, setsetshowallergy] = useState("");
   const handleDeleteAccount = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3001/delete-account', {
+      const response = await fetch('https://smartbite-g813.onrender.com/delete-account', {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -62,7 +62,7 @@ const [setshowallergy, setsetshowallergy] = useState("");
     try {
       setMessage(''); 
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3001/update-profile', {
+      const response = await fetch('https://smartbite-g813.onrender.com/update-profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -56,7 +56,7 @@ const Recipe2 = ({ data }) => {
     }
   
     try {
-      const response = await fetch("http://localhost:3001/fav", {
+      const response = await fetch("https://smartbite-g813.onrender.com/fav", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -90,7 +90,7 @@ const Recipe2 = ({ data }) => {
 
   const handleFetchRecipes = async (cuisine, mealType) => {
     try {
-      const response = await axios.get('http://localhost:3001/api/moodrecipes', {
+      const response = await axios.get('https://smartbite-g813.onrender.com/api/moodrecipes', {
         params: { cuisine, mealType },
       });
       setRecipes(response.data);
@@ -108,7 +108,7 @@ const Recipe2 = ({ data }) => {
 
   const handleFetchRecipeDetails = async (id) => {
     try {
-      const response = await axios.get('http://localhost:3001/getrecipe', { params: { id } });
+      const response = await axios.get('https://smartbite-g813.onrender.com/getrecipe', { params: { id } });
       console.log(response);
       
       

@@ -15,7 +15,7 @@ const Navbar = () => {
 
   const handledata = async () => {
     const token = localStorage.getItem('token');
-    let res = await fetch("http://localhost:3001/userdata", {
+    let res = await fetch("https://smartbite-g813.onrender.com/userdata", {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

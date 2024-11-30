@@ -42,7 +42,7 @@ const Inventory = () => {
     }
   
     try {
-      const res = await fetch("http://localhost:3001/items", {
+      const res = await fetch("https://smartbite-g813.onrender.com/items", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +72,7 @@ const Inventory = () => {
   
           try {
          
-            const updateResponse = await fetch("http://localhost:3001/update-items", {
+            const updateResponse = await fetch("https://smartbite-g813.onrender.com/update-items", {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
@@ -175,7 +175,7 @@ const Inventory = () => {
       const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
 
       const token = localStorage.getItem('token');
-      let res = await fetch("http://localhost:3001/items", {
+      let res = await fetch("https://smartbite-g813.onrender.com/items", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -205,7 +205,7 @@ const Inventory = () => {
   async function handledelete(id) {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch("http://localhost:3001/items", {
+      const res = await fetch("https://smartbite-g813.onrender.com/items", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

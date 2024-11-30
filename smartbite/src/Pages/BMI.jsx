@@ -59,7 +59,7 @@ const BMICalculator = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:3001/bmi',
+        'https://smartbite-g813.onrender.com/bmi',
         { weight, height, gender, bmiCategory, bmi },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -78,7 +78,7 @@ const BMICalculator = () => {
       const token = localStorage.getItem("token");
   
       try {
-        const res = await fetch("http://localhost:3001/userdata", {
+        const res = await fetch("https://smartbite-g813.onrender.com/userdata", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

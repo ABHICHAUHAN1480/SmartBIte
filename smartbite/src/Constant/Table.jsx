@@ -5,7 +5,7 @@ const Table = ({ data, setdata }) => {
   async function handledelete(id) {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch("http://localhost:3001/items", {
+      const res = await fetch("https://smartbite-g813.onrender.com/items", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -19,7 +19,7 @@ const Favrecipes = ({setSelectedRecipe,selectedRecipe,getFavs,toast,showremove})
             return;
         }
         try {
-            const res = await fetch("http://localhost:3001/fav", {
+            const res = await fetch("https://smartbite-g813.onrender.com/fav", {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

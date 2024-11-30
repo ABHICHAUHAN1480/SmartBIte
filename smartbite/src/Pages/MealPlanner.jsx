@@ -28,7 +28,7 @@ const MealPlanner = () => {
         }
       
         try {
-          const response = await fetch("http://localhost:3001/fav", {
+          const response = await fetch("https://smartbite-g813.onrender.com/fav", {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -74,7 +74,7 @@ const MealPlanner = () => {
             });
 
             const response = await fetch(
-                `http://localhost:3001/mealplan?${params.toString()}`,
+                `https://smartbite-g813.onrender.com/mealplan?${params.toString()}`,
                 {
                     method: "GET",
                     headers: {
@@ -127,7 +127,7 @@ const MealPlanner = () => {
     const handlerecipe = async (id) => {
         try {
           setLoading(true)
-          const response = await axios.get("http://localhost:3001/getrecipe", {
+          const response = await axios.get("https://smartbite-g813.onrender.com/getrecipe", {
             params: { id },
           });
           setSelectedRecipe(response.data);

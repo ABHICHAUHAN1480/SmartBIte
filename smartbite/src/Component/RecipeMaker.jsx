@@ -34,7 +34,7 @@ const RecipeMaker = () => {
     }
 
     try {
-      let res = await fetch("http://localhost:3001/items", {
+      let res = await fetch("https://smartbite-g813.onrender.com/items", {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ const RecipeMaker = () => {
    
 
     setRecipes([]);
-    let url = `http://localhost:3001/recipemaker`;
+    let url = `https://smartbite-g813.onrender.com/recipemaker`;
 
     if (searchByNutrition) {
       if(maxCalories===""){

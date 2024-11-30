@@ -40,7 +40,7 @@ const Allergies = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:3001/allergies',
+        'https://smartbite-g813.onrender.com/allergies',
         { allergies: Array.from(s3) },  // Convert Set to array
         {
           headers: {

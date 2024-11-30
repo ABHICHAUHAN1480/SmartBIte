@@ -30,7 +30,7 @@ const Signup = () => {
     }
     
     try {
-      const response = await axios.post("http://localhost:3001/api/auth/signup", {
+      const response = await axios.post("https://smartbite-g813.onrender.com/api/auth/signup", {
         name: form.name,
         user: form.user,
         email: form.email,

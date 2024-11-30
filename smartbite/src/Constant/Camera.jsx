@@ -69,7 +69,7 @@ const Camera = ({ setshowc }) => {
 
       // Send the image to the backend
       const result = await axios.post(
-        "http://localhost:3001/analyze-image",
+        "https://smartbite-g813.onrender.com/analyze-image",
         formData,
         {
           headers: {

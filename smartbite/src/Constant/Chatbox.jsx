@@ -39,7 +39,7 @@ const Chatbox = ( {setshowchatbox}) => {
 
     setTimeout(async () => {
       try {
-        const response = await axios.post("http://localhost:3001/api/converse", {
+        const response = await axios.post("https://smartbite-g813.onrender.com/api/converse", {
           text: userInput,
         });
 

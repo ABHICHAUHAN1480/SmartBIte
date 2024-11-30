@@ -14,7 +14,7 @@ const RecipeDetail = ({ recipe }) => {
             return;
         }
         try {
-            const res = await fetch("http://localhost:3001/fav", {
+            const res = await fetch("https://smartbite-g813.onrender.com/fav", {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -42,7 +42,7 @@ const RecipeDetail = ({ recipe }) => {
         }
       
         try {
-          const response = await fetch("http://localhost:3001/fav", {
+          const response = await fetch("https://smartbite-g813.onrender.com/fav", {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
