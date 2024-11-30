@@ -25,8 +25,8 @@ const Table = ({ data, setdata }) => {
   }
 
   return (
-    <div className="p-6 z-10">
-  <table className="m-auto w-full max-w-5xl rounded-xl bg-gradient-to-r from-gray-800 via-gray-900 to-black shadow-2xl overflow-hidden">
+    <div className=" p-0 sm:p-6 z-10 scale-x-75   sm:scale-x-100 ">
+  <table className="sm:m-auto  w-full max-w-5xl rounded-xl bg-gradient-to-r from-gray-800 via-gray-900 to-black shadow-2xl overflow-scroll div3">
     {/* Table Header */}
     <thead className="bg-gradient-to-r from-gray-600 to-gray-900">
       <tr>
@@ -38,7 +38,7 @@ const Table = ({ data, setdata }) => {
         </th>
       </tr>
       <tr className="text-gray-300 border-b border-gray-700">
-        <th className="py-4 px-6 text-lg font-medium uppercase tracking-wide">
+        <th className="py-4 sm:px-6  text-lg font-medium uppercase tracking-wide">
           Item
         </th>
         <th className="py-4 px-6 text-lg font-medium uppercase tracking-wide">
@@ -60,26 +60,13 @@ const Table = ({ data, setdata }) => {
     <tbody className="bg-gray-900 text-white">
       {data.length > 0 ? (
         data.map((i, index) => (
-          <tr
-            key={index}
-            className={`transition duration-300 ease-in-out ${
-              i.daysLeft <= 0 ? 'bg-red-700 hover:bg-gray-700 bg-opacity-40' : 'hover:bg-gray-700'
-            }`}
-          >
+          <tr key={index} className={`transition duration-300 ease-in-out ${      i.daysLeft <= 0 ? 'bg-red-700 hover:bg-gray-700 bg-opacity-40' : 'hover:bg-gray-700'    }`}>
             <td className="py-4 px-6 text-center text-base">{i.item}</td>
             <td className="py-4 px-6 text-center text-base">{i.expire}</td>
             <td className="py-4 px-6 text-center text-base">{i.quantity}</td>
-            <td
-              className={`py-4 px-6 text-center text-base font-semibold ${
-                i.daysLeft <= 5 ? 'text-red-400' : 'text-yellow-400'
-              }`}
-            >
-              {i.daysLeft}
+            <td className={`py-4 px-6 text-center text-base font-semibold ${   i.daysLeft <= 5 ? 'text-red-400' : 'text-yellow-400'  }`}>{i.daysLeft}
             </td>
-            <td
-              onClick={() => handledelete(i.id)}
-              className="flex justify-center items-center py-3 px-4 cursor-pointer hover:bg-red-600 rounded-full transition duration-300 transform hover:scale-110"
-            >
+            <td onClick={() => handledelete(i.id)} className="flex justify-center items-center py-3 px-4 cursor-pointer hover:bg-red-600 rounded-full transition duration-300 transform hover:scale-110" >
               <lord-icon
                 src="https://cdn.lordicon.com/skkahier.json"
                 trigger="hover"

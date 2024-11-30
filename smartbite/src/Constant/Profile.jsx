@@ -6,7 +6,7 @@ const Profile = ({ data, setShowProfile, setdata }) => {
   const genderis = data.info.gender;
   const [profileImage, setProfileImage] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-
+const [setshowallergy, setsetshowallergy] = useState("");
   // Editable form state
   const [formData, setFormData] = useState({
     name: data.name,
@@ -90,39 +90,40 @@ const Profile = ({ data, setShowProfile, setdata }) => {
   }
 
   return (
-    <div className="w-[350px] md:w-[400px] fixed z-20 top-28 right-6 md:right-8 text-black font-serif bg-opacity-95 p-6 bg-green-100 rounded-lg h-[700px] shadow-lg overflow-y-auto div3 transition-all">
+    <div className="w-[350px] md:w-[400px] sm:w-[400px]  fixed z-[9999] top-24 right-6 md:right-0 sm:right-0 text-black font-serif bg-gradient-to-br from-green-200 via-green-300 to-green-100 bg-opacity-90 p-6 rounded-2xl max-h-[80vh] shadow-2xl overflow-y-auto div3 transition-transform transform scale-100 hover:scale-105 duration-300">
     {/* Close Icon */}
     <button
       aria-label="Close Profile"
-      className="absolute top-2 right-2 text-black hover:text-gray-700 transition-colors"
+      className="absolute top-3 right-3 text-gray-800 hover:text-red-500 transition-all duration-300"
       onClick={() => setShowProfile(false)}
     >
       <lord-icon
         src="https://cdn.lordicon.com/nqtddedc.json"
         trigger="hover"
         state="hover-cross-2"
-        colors="primary:#000000"
+        colors="primary:#FF0000"
         style={{ width: 35, height: 35 }}
       />
     </button>
   
     {/* Profile Image Section */}
-    <div className="flex justify-center mt-2">
+    <div className="flex flex-col items-center">
       {profileImage ? (
         <p className="text-center font-bold text-xl">Something</p>
       ) : genderis === "male" ? (
         <img
           src={male}
           alt="Male"
-          className="w-[120px] h-[120px] rounded-full shadow-lg hover:scale-105 transition-transform"
+          className="w-[120px] h-[120px] rounded-full shadow-lg ring-4 ring-green-300 hover:scale-110 transition-transform duration-500"
         />
       ) : (
         <img
           src={female}
           alt="Female"
-          className="w-[120px] h-[120px] rounded-full shadow-lg hover:scale-105 transition-transform"
+          className="w-[120px] h-[120px] rounded-full shadow-lg ring-4 ring-green-300 hover:scale-110 transition-transform duration-500"
         />
       )}
+      <h2 className="mt-4 text-xl font-semibold text-gray-800">{data?.name}</h2>
     </div>
   
     {message && (
@@ -130,25 +131,23 @@ const Profile = ({ data, setShowProfile, setdata }) => {
     )}
   
     {/* Profile Details or Editable Form */}
-    <div className="text-lg mt-6 space-y-6">
+    <div className="text-lg mt-6 space-y-6 px-4">
       {isEditing ? (
         <form onSubmit={handleSubmit} className="space-y-6">
-          {[
-            { label: "Name", type: "text", name: "name", value: formData.name },
+          {[{ label: "Name", type: "text", name: "name", value: formData.name },
             { label: "Email", type: "email", name: "email", value: formData.email },
             { label: "Weight", type: "number", name: "weight", value: formData.weight },
-            { label: "Height", type: "number", name: "height", value: formData.height },
-            { label: "Allergies", type: "text", name: "allergies", value: formData.allergies },
-          ].map(({ label, ...input }) => (
-            <div className="flex justify-between items-center" key={input.name}>
-              <label className="font-semibold text-gray-700">{label}:</label>
-              <input
-                {...input}
-                onChange={handleInputChange}
-                className="border p-2 bg-white rounded-md w-[60%] focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-              />
-            </div>
-          ))}
+            { label: "Height", type: "number", name: "height", value: formData.height }]
+            .map(({ label, ...input }) => (
+              <div className="flex justify-between items-center" key={input.name}>
+                <label className="font-semibold text-gray-700">{label}:</label>
+                <input
+                  {...input}
+                  onChange={handleInputChange}
+                  className="border border-gray-300 bg-gradient-to-r from-green-300 via-green-400 to-green-200 p-2 rounded-md w-[60%] text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 hover:shadow-md transition-all"
+                />
+              </div>
+            ))}
   
           <div className="flex justify-between items-center">
             <label htmlFor="gender" className="font-semibold text-gray-700">
@@ -159,48 +158,50 @@ const Profile = ({ data, setShowProfile, setdata }) => {
               name="gender"
               value={formData.gender}
               onChange={handleInputChange}
-              className="border p-2 bg-white rounded-md w-[60%] focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              className="border border-gray-300 bg-gradient-to-r from-green-300 via-green-400 to-green-200 p-2 rounded-md w-[60%] text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 hover:shadow-md transition-all"
             >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
+              <option className="text-gray-100" value="male">Male</option>
+              <option className="text-gray-100" value="female">Female</option>
             </select>
           </div>
   
           <div className="flex justify-center mt-6">
             <button
               type="submit"
-              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 shadow-md transition-all transform hover:scale-105"
+              className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 shadow-md transition-transform transform hover:scale-105"
             >
               Save Changes
             </button>
           </div>
         </form>
+  
       ) : (
         <>
-          {[
-            { label: "Name", value: data.name },
+          {[{ label: "Name", value: data.name },
             { label: "Username", value: data.user },
             { label: "Email", value: data.email },
             { label: "Gender", value: data.info.gender },
-            { label: "Allergies", value: data.info.allergies.join(", ") },
             { label: "Weight", value: `${data.info.weight} kg` },
-            { label: "Height", value: `${data.info.height} cm` },
-          ].map(({ label, value }) => (
-            <div className="flex justify-between items-center" key={label}>
-              <span className="font-semibold text-gray-700">{label}:</span>
-              <span className="text-gray-800">{value}</span>
-            </div>
-          ))}
+            { label: "Height", value: `${data.info.height} cm` }]
+            .map(({ label, value }) => (
+              <div className="flex justify-between items-center" key={label}>
+                <span className="font-semibold text-gray-700">{label}:</span>
+                <span className="text-gray-800">{value}</span>
+              </div>
+            ))}
   
           <div className="flex justify-center gap-4 mt-6">
             <button
-              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 shadow-md transition-all transform hover:scale-105"
-              onClick={() => {setIsEditing(true);setMessage('');}}
+              className="bg-blue-500 text-white px-5 rounded-lg hover:bg-blue-600 shadow-md transition-transform transform hover:scale-105"
+              onClick={() => {
+                setIsEditing(true);
+                setMessage("");
+              }}
             >
               Edit Profile
             </button>
             <button
-              className="bg-gray-700 text-white px-6 py-2 rounded-lg hover:bg-gray-800 shadow-md transition-all transform hover:scale-105"
+              className="bg-gray-700 text-white px-6 py-2 rounded-lg hover:bg-gray-800 shadow-md transition-transform transform hover:scale-105"
               onClick={() => {
                 if (
                   window.confirm(
@@ -216,8 +217,8 @@ const Profile = ({ data, setShowProfile, setdata }) => {
           </div>
   
           <div className="flex justify-center mt-4">
-          <button
-              className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 shadow-md transition-all transform hover:scale-105"
+            <button
+              className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 shadow-md transition-transform transform hover:scale-105"
               onClick={() => {
                 if (window.confirm("Are you sure you want to log out?")) {
                   handleLogout();

@@ -16,6 +16,7 @@ import Recipe2 from './Constant/Recipe2';
 import RecipeSearch from './Constant/RecipeSearch';
 import Chatbox from './Constant/Chatbox';
 import Favourite from './Pages/Favourite';
+import MealPlanner from './Pages/MealPlanner';
 
 
 
@@ -84,13 +85,16 @@ function App() {
     },{
       path:'/favourites',
       element:<Favourite/>
+    },{
+      path:'/mealweek',
+      element:<MealPlanner/>
     }
     
   ]);
  
   return (
     
-    <div >
+    <div className='cursor-default' >
      
      <RouterProvider router={router}/>
       

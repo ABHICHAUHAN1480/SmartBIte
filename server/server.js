@@ -10,7 +10,7 @@ const FormData = require("form-data");
 const axios = require("axios");
 const app = express();
 const bodyParser = require("body-parser");
-const PORT = 3001;
+const PORT = process.env.port||3001;
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 const Fuse = require("fuse.js");
@@ -95,7 +95,7 @@ app.get("/recipemaker", async (req, res) => {
   try {
     // &cuisine=Indian   gger lhgana hai to lga lena
     const response = await fetch(
-      `https://api.spoonacular.com/recipes/complexSearch?includeIngredients=${encodeURIComponent(ingredients)}&number=5${diet ? `&diet=${diet}` : ""}&cuisine=Indian&apiKey=${process.env.SPOONACULAR_API_KEY}`
+      `https://api.spoonacular.com/recipes/complexSearch?includeIngredients=${encodeURIComponent(ingredients)}&number=5${diet ? `&diet=${diet}` : ""}&excludeIngredients=beef,pork&cuisine=Indian&apiKey=${process.env.SPOONACULAR_API_KEY}`
     );
 
     if (!response.ok) {
@@ -143,7 +143,7 @@ app.get("/recipemaker/nutrition", async (req, res) => {
   }
 
   try {
-    const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?number=5&apiKey=${process.env.SPOONACULAR_API_KEY}&maxCalories=${maxCalories || ''}&maxProtein=${maxProtein || ''}&maxCarbs=${maxCarbs || ''}&maxFat=${maxFat || ''}`);
+    const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?number=5&apiKey=${process.env.SPOONACULAR_API_KEY}&excludeIngredients=beef,pork&maxCalories=${maxCalories || ''}&maxProtein=${maxProtein || ''}&maxCarbs=${maxCarbs || ''}&maxFat=${maxFat || ''}`);
 
     if (!response.ok) {
       throw new Error(`Error fetching recipes by nutrition: ${response.statusText}`);
@@ -157,35 +157,57 @@ app.get("/recipemaker/nutrition", async (req, res) => {
   }
 });
 
-app.get("/mealplan", async (req, res) => {
+app.get('/mealplan', async (req, res) => {
   try {
-    const response = await fetch(`https://api.spoonacular.com/mealplanner/generate?timeFrame=week&apiKey=${process.env.SPOONACULAR_API_KEY}`);
+    const { timeFrame, targetCalories, diet, exclude } = req.query; 
 
+    const params = new URLSearchParams({
+      timeFrame: timeFrame || 'day', 
+      targetCalories: targetCalories || 2000, 
+      diet: diet || '', 
+      exclude: exclude || '', 
+      apiKey: process.env.SPOONACULAR_API_KEY, 
+    });
+
+
+    const response = await fetch(`https://api.spoonacular.com/mealplanner/generate?${params.toString()}`);
     if (!response.ok) {
       throw new Error(`Failed to fetch meal plan from Spoonacular: ${response.statusText}`);
     }
 
     const data = await response.json();
 
-
-    // Initialize mealPlan object
+   
     const mealPlan = {};
-
-    // Use Object.keys to iterate over the days of the week (monday, tuesday, etc.)
-    Object.keys(data.week).forEach((day) => {
-      mealPlan[day] = data.week[day].meals.map((meal) => ({
+    if (timeFrame === 'week') {
+      Object.keys(data.week).forEach((day) => {
+        mealPlan[day] = data.week[day].meals.map((meal) => ({
+          id: meal.id,
+          title: meal.title,
+          image: `https://spoonacular.com/recipeImages/${meal.id}-312x231.jpg`,
+          time: meal.readyInMinutes,
+          serving: meal.servings,
+          url: meal.sourceUrl,
+        }));
+      });
+    } else if (timeFrame === 'day') {
+      mealPlan.day = data.meals.map((meal) => ({
         id: meal.id,
         title: meal.title,
         image: `https://spoonacular.com/recipeImages/${meal.id}-312x231.jpg`,
+        time: meal.readyInMinutes,
+        serving: meal.servings,
+        url: meal.sourceUrl,
       }));
-    });
+    }
 
-    res.json(mealPlan); // Send the structured meal plan response
+    res.json(mealPlan); 
   } catch (error) {
-    console.error("Error fetching meal plan:", error.message);
+    console.error('Error fetching meal plan:', error.message);
     res.status(500).json({ error: error.message });
   }
 });
+
 
 app.use(express.json()); 
 
@@ -249,14 +271,14 @@ app.post('/api/auth/login', async (req, res) => {
     const foundUser = await User.findOne({ user });
 
     if (foundUser) {
-      // Check if the password matches
+  
       const isMatch = await foundUser.matchPassword(password);
       if (!isMatch) {
-        console.log("Password mismatch"); // Debugging line
+        console.log("Password mismatch"); 
         return res.status(401).json({ message: 'Invalid credentials' });
       }
 
-      // Generate a token for the logged-in user
+      
       const token = jwt.sign({ id: foundUser._id }, process.env.JWT_SECRET, { expiresIn: '3d' });
       res.json({
         _id: foundUser._id,
@@ -266,11 +288,11 @@ app.post('/api/auth/login', async (req, res) => {
         token,
       });
     } else {
-      console.log("User not found"); // Debugging line
+      console.log("User not found"); 
       res.status(401).json({ message: 'Invalid credentials' });
     }
   } catch (error) {
-    console.error("Server error:", error); // Debugging line
+    console.error("Server error:", error); 
     res.status(500).json({ message: 'Server Error' });
   }
 });
@@ -305,8 +327,6 @@ app.post('/bmi', async (req, res) => {
     const { weight, height, gender, bmiCategory, bmi } = req.body;
     const token = req.headers.authorization?.split(' ')[1];
     const id = jwt.verify(token, process.env.JWT_SECRET).id;
-
- 
     const newBmi = {
       weight,
       height,
@@ -321,7 +341,6 @@ app.post('/bmi', async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-   
     user.info = newBmi;
 
   
@@ -333,12 +352,6 @@ app.post('/bmi', async (req, res) => {
     res.status(400).json({ message: 'Error saving BMI', error });
   }
 });
-
-
-
-
-
-
 
 app.post('/allergies', async (req, res) => {
   try {
@@ -367,7 +380,6 @@ app.post('/allergies', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
-
 
 app.get("/items", async (req, res) => {
   try {
@@ -407,7 +419,7 @@ app.get("/items", async (req, res) => {
 app.post('/items', async (req, res) => {
 
   try {
-    const { item, quantity, expire, id } = req.body;
+    const { item, quantity, expire, id,unit } = req.body;
     const token = req.headers.authorization?.split(' ')[1];
 
     const expiryDate = new Date(expire);
@@ -418,10 +430,11 @@ app.post('/items', async (req, res) => {
       item,
       quantity,
       expire,
+      unit,
       id,
       dayLeft: daysLeft,
     });
-
+     
 
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -539,8 +552,6 @@ app.put('/update-items', async (req, res) => {
   }
 });
 
-
-
 app.get('/userdata', async (req, res) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
@@ -600,7 +611,7 @@ app.get('/api/moodrecipes', async (req, res) => {
 
   try {
     const API_URL = "https://api.spoonacular.com/recipes/complexSearch?"
-    const url = `${API_URL}?mealType=${mealType}&cuisine=${cuisine}&apiKey=${process.env.SPOONACULAR_API_KEY}`;
+    const url = `${API_URL}?mealType=${mealType}&cuisine=${cuisine}&excludeIngredients=beef,pork&apiKey=${process.env.SPOONACULAR_API_KEY}`;
     const response = await fetch(url);
     const data = await response.json();
 
@@ -609,7 +620,7 @@ app.get('/api/moodrecipes', async (req, res) => {
       return res.status(500).json({ message: 'Error fetching recipes' });
     }
 
-    // Return the recipe data
+    
     res.status(200).json(data.results);
   } catch (error) {
     console.error('Error fetching data from Spoonacular:',);
@@ -648,7 +659,6 @@ app.get("/getrecipe", async (req, res) => {
   }
 });
 
-
 app.get("/api/search", async (req, res) => {
   const { query } = req.query;
 
@@ -679,7 +689,6 @@ app.get("/api/search", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch recipes." });
   }
 });
-
 
 
 app.post("/api/converse", async (req, res) => {
@@ -717,12 +726,9 @@ app.post("/api/converse", async (req, res) => {
   }
 });
 
-
-
-
 app.delete('/delete-account', async (req, res) => {
   try {
-    // Extract and validate the token
+   
     const authHeader = req.headers.authorization;
     if (!authHeader) {
       return res.status(401).json({ message: 'Unauthorized: No token provided.' });
@@ -777,7 +783,7 @@ app.get("/fav", async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-
+         
  
     const favRecipes = user.recipe.favourite;
     if (!favRecipes || favRecipes.length === 0) {
@@ -889,9 +895,6 @@ app.delete('/fav', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
-
-
 
 
 app.listen(PORT, () => {

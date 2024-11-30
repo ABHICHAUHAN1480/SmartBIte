@@ -27,6 +27,7 @@ const Meal_Mood = () => {
     });
   
 }, [])
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -41,29 +42,11 @@ const Meal_Mood = () => {
   const gotoingreidientsmeal =()=>{
     navigate("/recpiemaker")
   }
-
-  const fetchMealPlan = async () => {
-    setLoading(true);
-    setError('');
-    setMealPlan(null);
-    try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:3001/mealplan`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-      if (!response.ok) throw new Error('Failed to fetch meal plan.');
-      const data = await response.json();
-      setMealPlan(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const gotoMealPlan =()=>{
+    navigate('/mealweek')
+  }
+ 
+  
   const gotoingrecipe=()=>{
     navigate("/searchrecipe")
   }
@@ -72,13 +55,11 @@ const Meal_Mood = () => {
     <div className="relative w-full overflow-hidden min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
       <ToastContainer autoClose={3000} hideProgressBar={false} closeOnClick />
       <Navbar />
-      <span className="z-[9999]"> {showchatbox && <Chatbox/>}</span>
+      <span className="z-[9999]"> {showchatbox && <Chatbox setshowchatbox={setshowchatbox}/>}</span>
       <div className="mt-36 mb-20">
-  {/* Hero Section */}
+  
   <span
-    onClick={() => setshowchatbox((prev) => !prev)}
-    className={`flex fixed z-50 ${!showchatbox ? 'bg-gray-800' : 'bg-orange-600'} bg-opacity-95 ml-[94%] mt-[39%] items-center w-[80px] h-[80px] md:w-[70px] md:h-[70px] justify-center border-4 border-orange-500 rounded-full shadow-xl hover:border-orange-700 hover:shadow-2xl transform hover:scale-110 transition-all duration-300 ease-in-out`}
-  >
+    onClick={() => setshowchatbox((prev) => !prev)} className={`fixed z-50 ${!showchatbox ? "bg-gray-900" : "bg-orange-500 hidden" }  flex sm:flex items-center cursor-pointer justify-center w-[70px] h-[70px] md:w-[60px] md:h-[60px] bottom-8 right-8 rounded-full shadow-lg border-2 border-orange-500 hover:border-orange-700 hover:shadow-2xl transform hover:scale-105 transition-all duration-300`}>
     <img
       className="w-[70%] p-1 filter transition-transform duration-300 ease-in-out invert"
       src={chaticon}
@@ -86,7 +67,7 @@ const Meal_Mood = () => {
     />
   </span>
 
-  {/* Welcome Section */}
+  
   <div className="text-center cursor-default">
     <div className="py-16 w-[90%] mx-auto bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 shadow-2xl rounded-3xl transform transition-all duration-500 hover:scale-105 hover:shadow-3xl">
       <h1 className="text-4xl font-extrabold mb-4 text-white drop-shadow-md">
@@ -96,24 +77,17 @@ const Meal_Mood = () => {
         Generate a personalized meal plan tailored to your needs!
       </p>
       <button
-        onClick={fetchMealPlan}
+        onClick={gotoMealPlan}
         className="mt-8 px-8 py-3 bg-white text-gray-900 font-semibold rounded-full shadow-lg hover:bg-gray-100 hover:shadow-xl transition duration-300 transform hover:scale-105"
       >
         Generate Meal Plan
       </button>
     </div>
-    <div className="mt-6">
-      {loading && (
-        <p className="text-gray-300 animate-pulse text-xl">
-          Loading meal plan...
-        </p>
-      )}
-      {error && <p className="text-red-400 text-lg">{error}</p>}
-    </div>
+   
   </div>
 
-  {/* Meal Plan Display */}
-  {mealPlan && (
+  
+  {/* {mealPlan && (
     <div className="mt-12 px-6">
       <h2 className="text-3xl font-bold text-center text-white mb-8">
         Your Meal Plan
@@ -149,9 +123,9 @@ const Meal_Mood = () => {
         </div>
       ))}
     </div>
-  )}
+  )} */}
 
-  {/* Mood-Based Meals Section */}
+
   <div className="py-16 text-center w-[90%] mx-auto bg-gradient-to-r from-yellow-400 via-orange-500 to-red-600 shadow-2xl rounded-3xl mt-12 transform transition-all duration-500 hover:scale-105 hover:shadow-3xl">
     <h1 className="text-4xl font-extrabold mb-6 text-white">
       Mood-Based Meals
@@ -188,7 +162,7 @@ const Meal_Mood = () => {
     </button>
   </div>
 
-  {/* Recipe by Ingredients Section */}
+  
   <div className="py-16 text-center w-[90%] mx-auto bg-gradient-to-r from-teal-400 via-cyan-500 to-indigo-600 shadow-2xl rounded-3xl mt-12 transform transition-all duration-500 hover:scale-105 hover:shadow-3xl">
     <h1 className="text-4xl font-extrabold mb-6 text-white">
       Recipe by Ingredients & Nutrients
@@ -219,7 +193,7 @@ const Meal_Mood = () => {
     </button>
   </div>
 
-  {/* Recipe by Name Section */}
+  
   <div className="py-16 text-center w-[90%] mx-auto bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 shadow-2xl rounded-3xl mt-12 transform transition-all duration-500 hover:scale-105 hover:shadow-3xl">
     <h1 className="text-4xl font-extrabold mb-6 text-white">
       Recipe by Name

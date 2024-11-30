@@ -14,12 +14,16 @@ import { useRef } from 'react'
 const Home = () => {
   const featuresRef = useRef(null);
 
-const scrollToFeatures = () => {
-  featuresRef.current.scrollIntoView({
-    behavior: "smooth", 
-    block: "start", 
-  });
-};
+  const scrollToFeatures = () => {
+    const offset = 50; 
+    const elementPosition = featuresRef.current.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - offset;
+  
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
+  };
 
 useEffect(() => {
     window.scrollTo({
@@ -82,14 +86,14 @@ useEffect(() => {
           Get Started
         </button>
         <button
-              onClick={scrollToFeatures} // Trigger smooth scroll
+              onClick={scrollToFeatures}
               className="text-green-400 hover:text-green-300 text-lg transition-colors animate-bounce"
             >
               Learn More <i className="ml-2 fas fa-arrow-down"></i>
             </button>
       </div>
     </div>
-       {/* Activity Rings Section */}
+{/*       
        <div className="mt-10 px-4 sm:px-12 relative">
   <h2 className="text-4xl text-white font-semibold mb-12 text-center">
     Your Daily Activity Rings
@@ -120,9 +124,6 @@ useEffect(() => {
     ))}
   </div>
 </div>
-
-  
-    {/* Nutritional Graphs Section */}
     <div className="mb-16">
   <h2 className="text-4xl text-white font-semibold mb-12 text-center">
     Nutritional Breakdown
@@ -138,10 +139,10 @@ useEffect(() => {
       </div>
     ))}
   </div>
-</div>
+</div> */}
 
-    {/* Cards Section */}
-    <div ref={featuresRef} id="features" className="space-y-16 px-4 sm:px-8 lg:px-16 mt-20">
+ {/* mt-20 */}
+    <div ref={featuresRef} id="features" className="space-y-16 px-4 sm:px-8 lg:px-16 ">
   <h2 className="text-4xl text-white font-semibold mb-12 text-center">
     Explore Features
   </h2>
@@ -213,10 +214,9 @@ useEffect(() => {
         ></div>
 
         {/* Left Section (Icon + Image) */}
-        <div className="p-8 flex flex-col items-center lg:w-1/3">
+        <div className="p-0 flex flex-col items-center lg:p-8 md:p-6 sm:p-4  lg:w-1/3">
           <div
-            className="text-[175px]   text-white drop-shadow-md transform group-hover:rotate-12 group-hover:scale-110 transition-transform duration-500"
-          >
+            className="text-[100px] lg:text-[175px] md:text-[150px] sm:text-[130px]  text-white drop-shadow-md transform group-hover:rotate-12 group-hover:scale-110 transition-transform duration-500" >
             {card.icon}
           </div>
           {/* <img
@@ -245,16 +245,15 @@ useEffect(() => {
           </ul>
 
           {/* Buttons */}
-          <div className="space-x-4">
+          <div className="  flex  flex-col gap-4  sm:flex-row">
             <button
               onClick={card.onClick}
-              className={`${card.color === 'yellow' ? 'bg-yellow-600' : (card.color==='purple'?`bg-purple-600`:`bg-${card.color}-600`)}  hover:${card.color === 'yellow' ? 'bg-yellow-500' : (card.color==='purple'?`bg-purple-500`:`bg-${card.color}-500`)} text-white font-bold py-3 px-8 rounded-md shadow-lg transform hover:scale-105 transition-transform duration-300`}
+              className={`${card.color === 'yellow' ? 'bg-yellow-600' : (card.color==='purple'?`bg-purple-600`:`bg-${card.color}-600`)}  hover:${card.color === 'yellow' ? 'bg-yellow-500' : (card.color==='purple'?`bg-purple-500`:`bg-${card.color}-500`)} text-white font-bold py-3 w-full sm:px-8 sm:w-auto rounded-md shadow-lg transform hover:scale-105 transition-transform duration-300`}
             >
               Explore {card.title}
             </button>
             <button
-              className="bg-zinc-700 hover:bg-zinc-600 text-slate-300 font-bold py-3 px-8 rounded-md shadow-lg transform hover:scale-105 transition-transform duration-300"
-            >
+              className="  bg-zinc-700 hover:bg-zinc-600 text-slate-300  font-bold py-3  w-full sm:px-8 sm:w-auto  rounded-md shadow-lg transform hover:scale-105 transition-transform duration-300"  >
               Learn More
             </button>
           </div>
@@ -262,7 +261,7 @@ useEffect(() => {
 
         {/* Decorative Circle */}
         <div
-          className={`absolute bottom-0 right-0 h-32 w-32 lg:h-48 lg:w-48 rounded-full   ${card.color === 'yellow' ? 'bg-yellow-600' : `bg-${card.color}-600`}  opacity-20 blur-3xl transform scale-125 lg:scale-150`}
+          className={`absolute bottom-0 right-0 h-96 w-32 lg:h-48 lg:w-48 rounded-full   ${card.color === 'yellow' ? 'bg-yellow-600' : `bg-${card.color}-600`}  opacity-20 blur-3xl transform scale-125 lg:scale-150`}
         ></div>
       </div>
     ))}

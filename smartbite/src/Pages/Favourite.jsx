@@ -16,7 +16,8 @@ const Favourite = () => {
     const navigate = useNavigate();
     const [selectedRecipe, setSelectedRecipe] = useState(null);
     const [loading, setloading] = useState(false)
-     
+    const [showremove, setshowremove] = useState(true)
+
     useEffect(() => {
         getFavs();
         window.scrollTo({ top: 0 });
@@ -35,12 +36,12 @@ const Favourite = () => {
     const getFavs = async () => {
         const token = localStorage.getItem("token");
         setloading(true)
+        
         if (!token) {
             toast("No token found. Please login again.");
             setTimeout(() => navigate("/login"), 3000);
             return;
         }
-
         try {
             const res = await fetch("http://localhost:3001/fav", {
                 method: "GET",
@@ -55,6 +56,12 @@ const Favourite = () => {
             }
 
             const user = await res.json();
+            if(user.length===0){
+                toast("Add some recipes first ");
+                setSelectedRecipe(null)
+                setloading(false)
+
+            }
             setSelectedRecipe(null)
 
             setRecipes(user);
@@ -65,6 +72,37 @@ const Favourite = () => {
             toast("An error occurred while fetching favorite recipes.");
         }
     };
+    const handleremovefav = async (id) => {
+        const token = localStorage.getItem("token");
+    
+        
+        if (!token) {
+            toast("No token found. Please login again.");
+            setTimeout(() => navigate("/login"), 3000);
+            return;
+        }
+        try {
+            const res = await fetch("http://localhost:3001/fav", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ id }),
+            });
+            if (!res.ok) {
+                throw new Error("Failed to Delete  items.");
+            }
+            toast("Recipe removed sucessfully")
+            
+            setTimeout(() => {
+                getFavs();
+            }, 1000);
+        } catch (error) {
+            console.error("Error in getFavs:", error);
+            toast("An error occurred while fetching favorite recipes.");
+        }
+    }
 
 
 
@@ -128,10 +166,15 @@ const Favourite = () => {
                     </div>
                 )}
 
-                <span className="z-[9999]"> {showchatbox && <Chatbox />}</span>
-                <div className="mt-36 mb-20  "> <span onClick={() => setshowchatbox((prev) => !prev)} className={`flex fixed z-50 ${!showchatbox ? "bg-gray-900" : "bg-orange-500"}  bg-opacity-90 ml-[94%] mt-[39%] items-center w-[80px] h-[80px] md:w-[70px] md:h-[70px] justify-center border-2 border-orange-500 rounded-full shadow-lg  hover:border-orange-700 hover:shadow-2xl transform hover:scale-110 transition-all duration-300 ease-in-out`}>
-                    <img className="w-[70%] p-1 invert  transition-transform duration-300 ease-in-out" src={chaticon} alt="chatbox" />
-                </span>
+                <span className="z-[9999]"> {showchatbox && <Chatbox setshowchatbox={setshowchatbox}/>}</span>
+                <div className="mt-36 mb-20  ">   <span
+          onClick={() => setshowchatbox((prev) => !prev)} className={`fixed z-50 ${!showchatbox ? "bg-gray-900" : "bg-orange-500 hidden"     } flex sm:flex items-center cursor-pointer justify-center w-[70px] h-[70px] md:w-[60px] md:h-[60px] bottom-8 right-8 rounded-full shadow-lg border-2 border-orange-500 hover:border-orange-700 hover:shadow-2xl transform hover:scale-105 transition-all duration-300`} >
+          <img
+            className="w-2/3 p-1 invert transition-transform duration-300 ease-in-out"
+            src={chaticon}
+            alt="Chatbox Icon"
+          />
+        </span>
                     <div className='p-6 min-h-[50vh] flex-grow'>
                         <div className="text-center mb-12">
                             <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 drop-shadow-md hover:drop-shadow-lg transition-shadow duration-300">
@@ -159,10 +202,12 @@ const Favourite = () => {
                                                     alt={recipeObj.title}
                                                     className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"
                                                 />
-                                                
-                                                
-                                                
-                                                
+                                                <span className='top-0 right-0 absolute cursor-pointer ' onClick={()=>handleremovefav(`${recipeObj.id}`)} ><lord-icon
+                                                    src="https://cdn.lordicon.com/zxvuvcnc.json"
+                                                   trigger="click"
+                                                   state="hover-cross-3"
+                                                    style={{width:35,height:35}}>
+                                                </lord-icon></span>
                                                 <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent text-white text-center py-2 px-3">
                                                     <h4 className="text-lg font-bold truncate">{recipeObj.title}</h4>
                                                 </div>
@@ -197,7 +242,7 @@ const Favourite = () => {
                         </div>
 
 
-                        {selectedRecipe && <Favrecipes setSelectedRecipe={setSelectedRecipe} selectedRecipe={selectedRecipe} getFavs={getFavs} toast={showToast} />}
+                        {selectedRecipe && <Favrecipes showremove={showremove} setSelectedRecipe={setSelectedRecipe} selectedRecipe={selectedRecipe} getFavs={getFavs} toast={showToast} />}
 
 
                     </div>

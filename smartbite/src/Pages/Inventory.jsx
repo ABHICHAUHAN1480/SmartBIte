@@ -17,7 +17,7 @@ import { useLocation } from "react-router-dom";
 const Inventory = () => {
 
   const navigate = useNavigate();
-  const [form, setform] = useState({ item: "", expire: "", quantity: "" });
+  const [form, setform] = useState({ item: "", expire: "", quantity: "",unit:"" });
   const [data, setdata] = useState([])
   const [show, setshow] = useState(false)
   const [showc, setshowc] = useState(false)
@@ -185,6 +185,7 @@ const Inventory = () => {
           item: form.item,
           expire: form.expire,
           quantity: form.quantity,
+          unit:form.unit,
           id: uuidv4(),
           daysLeft: daysLeft
         })
@@ -192,7 +193,7 @@ const Inventory = () => {
 
       const newItem = await res.json();
       setdata([...data, { ...newItem, expire: new Date(form.expire).toLocaleDateString(), daysLeft }]);
-      setform({ item: "", expire: "", quantity: "" });
+      setform({ item: "", expire: "", quantity: "",unit:"" });
     }
   };
   const handleimg = () => {
@@ -247,7 +248,7 @@ const Inventory = () => {
     {show && <ImageUpload setshow={setshow} setform={setform} />}
     {showc && <Camera setshowc={setshowc} />}
 
-    {/* Expired Items Modal */}
+  
     {showexpired && showexpired1 && (
   <div className="bg-gradient-to-r div3 from-red-600 to-yellow-700 text-white absolute z-30 ml-[4%] w-11/12 mx-auto rounded-2xl p-8 h-[80vh] shadow-xl overflow-y-scroll transform transition-all">
    
@@ -336,112 +337,136 @@ const Inventory = () => {
    
 
     {/* Inventory Input Section */}
-    <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-zinc-900 text-white p-12 mx-auto max-w-4xl rounded-xl shadow-2xl">
-      <h2 className="text-4xl font-extrabold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-500">
-        Add Item to Inventory
-      </h2>
+    <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-zinc-900 text-white p-6 sm:p-12 mx-auto max-w-2xl lg:max-w-4xl rounded-xl shadow-2xl">
+  <h2 className="text-3xl sm:text-4xl font-extrabold text-center mb-6 sm:mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-500">
+    Add Item to Inventory
+  </h2>
 
-      {/* Inventory Input Section */}
-      <div className="grid grid-cols-1 gap-6 mb-8">
-        {/* Item Name and Icon Section */}
-        <div className="flex items-center justify-between gap-6">
-          {/* Item Name Input */}
-          <div className="flex-1">
-            <label className="text-lg font-semibold text-gray-300 mb-2">Item Name</label>
-            <input
-              onChange={handleChange}
-              className="p-4 w-full rounded-xl bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out transform hover:scale-105"
-              type="text"
-              value={form.item}
-              placeholder="Enter item name"
-              name="item"
-            />
-          </div>
-          <span className='text-2xl mt-3 font-semibold text-gray-300'> or</span>
-          {/* Image Upload/Camera Icons */}
-          <div className="flex mt-5 gap-4">
-            <div
-              onClick={handleimg2}
-              className="bg-gray-700 p-2 rounded-3xl cursor-pointer hover:bg-gray-600 transition duration-300 ease-in-out transform hover:scale-105"
-            >
-              <lord-icon
-                src="https://cdn.lordicon.com/vneufqmz.json"
-                trigger="hover"
-                style={{ width: 45, height: 45 }}
-              />
-            </div>
-            <div
-              onClick={handleimg}
-              className="bg-gray-700 p-2 rounded-3xl cursor-pointer hover:bg-gray-600 transition duration-300 ease-in-out transform hover:scale-105"
-            >
-              <lord-icon
-                src="https://cdn.lordicon.com/pbhjpofq.json"
-                trigger="hover"
-                style={{ width: 45, height: 45 }}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Expiration Date and Quantity Inputs */}
-        <div className="flex gap-6 mb-8">
-          {/* Expiration Date Input */}
-          <div className="flex-1">
-            <label className="text-lg font-semibold text-gray-300 mb-2">Expiration Date</label>
-            <input
-              onChange={handleChange}
-              className="p-4 w-full rounded-xl bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out transform hover:scale-105"
-              type="date"
-              value={form.expire}
-              name="expire"
-            />
-          </div>
-
-          {/* Quantity Input */}
-          <div className="flex-1">
-            <label className="text-lg font-semibold text-gray-300 mb-2">Quantity</label>
-            <input
-              onChange={handleChange}
-              className="p-4 w-full rounded-xl bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out transform hover:scale-105"
-              type="number"
-              value={form.quantity}
-              placeholder="Enter quantity"
-              name="quantity"
-            />
-          </div>
-        </div>
+  {/* Inventory Input Section */}
+  <div className="grid grid-cols-1 gap-6 mb-8">
+    {/* Item Name and Icon Section */}
+    <div className="flex flex-col  lg:flex-row items-center lg:items-start justify-between gap-3 sm:gap-6">
+      {/* Item Name Input */}
+      <div className="flex-1 w-full">
+        <label className="text-base sm:text-lg  font-semibold text-gray-300 mb-2 block">
+          Item Name
+        </label>
+        <input
+          onChange={handleChange}
+          className="p-3 sm:p-4 w-full rounded-xl bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out transform hover:scale-105"
+          type="text"
+          value={form.item}
+          placeholder="Enter item name"
+          name="item"
+        />
       </div>
+      <span className="text-lg sm:text-2xl font-semibold text-gray-300 lg:mt-4">or</span>
 
-      {/* Add to Inventory Button */}
-      <div className="flex justify-center">
-        <button
-          onClick={Setitem}
-          className="bg-green-600 hover:bg-green-700 px-8 py-4 rounded-3xl shadow-xl text-xl font-semibold transition duration-300 ease-in-out transform hover:scale-105"
+      {/* Image Upload/Camera Icons */}
+      <div className="flex gap-4">
+        <div
+          onClick={handleimg2}
+          className="bg-gray-700 p-2 rounded-3xl cursor-pointer hover:bg-gray-600 transition duration-300 ease-in-out transform hover:scale-105"
         >
-          Add to Inventory
-          <img src={add} className="w-7 inline-block ml-2" alt="Add Icon" />
-        </button>
+          <lord-icon
+            src="https://cdn.lordicon.com/vneufqmz.json"
+            trigger="hover"
+            style={{ width: 45, height: 45 }}
+          />
+        </div>
+        <div
+          onClick={handleimg}
+          className="bg-gray-700 p-2 rounded-3xl cursor-pointer hover:bg-gray-600 transition duration-300 ease-in-out transform hover:scale-105"
+        >
+          <lord-icon
+            src="https://cdn.lordicon.com/pbhjpofq.json"
+            trigger="hover"
+            style={{ width: 45, height: 45 }}
+          />
+        </div>
       </div>
     </div>
+
+    {/* Expiration Date and Quantity Inputs */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-2 sm:mb-8">
+      {/* Expiration Date Input */}
+      <div>
+        <label className="text-base sm:text-lg font-semibold text-gray-300 mb-2 block">
+          Expiration Date
+        </label>
+        <input
+          onChange={handleChange}
+          className="p-3 sm:p-4 w-full rounded-xl bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out transform hover:scale-105"
+          type="date"
+          value={form.expire}
+          name="expire"
+        />
+      </div>
+
+      {/* Quantity Input */}
+      <div>
+        <label className="text-base sm:text-lg font-semibold text-gray-300 mb-2 block">
+          Quantity
+        </label>
+        <input
+          onChange={handleChange}
+          className="p-3 sm:p-4 w-full rounded-xl bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out transform hover:scale-105"
+          type="number"
+          value={form.quantity}
+          placeholder="Enter quantity"
+          name="quantity"
+        />
+      </div>
+
+      {/* Quantity Type */}
+      <div>
+        <label className="text-base sm:text-lg font-semibold text-gray-300 mb-2 block">
+          Quantity Type
+        </label>
+        <select
+          onChange={handleChange}
+          className="p-3 sm:p-4 w-full rounded-xl bg-gray-700 text-white focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out transform hover:scale-105"
+          name="unit"
+          value={form.unit || ""}
+        >
+          <option value="" disabled>Select unit</option>
+          <option value="pieces">Pieces</option>
+          <option value="grams">Grams (g)</option>
+          <option value="kilograms">Kilograms (kg)</option>
+          <option value="lbs">Pounds (lbs)</option>
+          <option value="oz">Ounces (oz)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  {/* Add to Inventory Button */}
+  <div className="flex justify-center">
+    <button
+      onClick={Setitem}  className="bg-green-600 hover:bg-green-700 px-6 sm:px-8 py-3 sm:py-4 rounded-3xl shadow-xl text-lg sm:text-xl font-semibold transition duration-300 ease-in-out transform hover:scale-105">
+      Add to Inventory
+      <img src={add} className="w-6 sm:w-7 inline-block ml-2" alt="Add Icon" />
+    </button>
+  </div>
+</div>
+
 
     {/* Inventory Table Section */}
-    <div className="mt-12 mx-6 rounded-2xl max-h-[100vh] overflow-scroll div3 shadow-xl bg-gray-800 text-white p-6">
-      <Table data={data} setdata={setdata} />
-      
+    <div className="mt-12 mx- sm:mx-6 rounded-2xl max-h-[80vh] overflow-auto shadow-xl bg-gray-800 text-white p-2 sm:p-6 transform ">
+  <Table data={data} setdata={setdata} />
+</div>
 
-    </div>
-    <div className="flex gap-16 justify-center ">
-  <button onClick={() => {setshowexpireing1(true);setshowexpireing(true); setshowexpired(false);handleScrollUp()} }
-    className="bg-gradient-to-r from-cyan-700 via-sky-800 to-blue-700 hover:from-cyan-900 hover:to-blue-800 text-white font-bold py-3 px-8 rounded-md shadow-lg transform hover:scale-105 transition-all duration-500 animate-spin"
-  >
+<div className="flex flex-wrap gap-6 justify-center p-4 sm:gap-16">
+  <button
+    onClick={() => {setshowexpireing1(true);setshowexpireing(true);setshowexpired(false);handleScrollUp();}} className="bg-gradient-to-r from-cyan-700 via-sky-800 to-blue-700 hover:from-cyan-900 hover:to-blue-800 text-white font-bold py-3 px-6 sm:px-8 rounded-md shadow-lg transform hover:scale-105 transition-all duration-500">
     Show Expiring
   </button>
-  <button onClick={() => {setshowexpired1(true);setshowexpired(true) ; setshowexpireing(false);handleScrollUp()}}
-    className="bg-gradient-to-r from-yellow-700 to-orange-700 hover:from-yellow-900 hover:to-orange-800 text-white font-bold py-3 px-8 rounded-md shadow-lg transform hover:scale-105 transition-all duration-500 animate-spin"
-  >
+  <button
+    onClick={() => {setshowexpired1(true);setshowexpired(true); setshowexpireing(false); handleScrollUp();}}className="bg-gradient-to-r from-yellow-700 to-orange-700 hover:from-yellow-900 hover:to-orange-800 text-white font-bold py-3 px-6 sm:px-8 rounded-md shadow-lg transform hover:scale-105 transition-all duration-500">
     Show Expired
   </button>
 </div>
+
 
     
   </div>

@@ -25,9 +25,9 @@ const BMICalculator = () => {
   useEffect(() => {
     if (bmi < 18.5) {
       setBmiCategory('Underweight');
-    } else if (bmi < 25) {
+    } else if (bmi < 22.9) {
       setBmiCategory('Normal');
-    } else if (bmi < 30) {
+    } else if (bmi < 27.4) {
       setBmiCategory('Overweight');
     } else {
       setBmiCategory('Obese');
@@ -253,6 +253,7 @@ const BMICalculator = () => {
         </div>
 
         {/* Save Button */}<span className='flex gap-8'>
+        {data&& <button onClick={handleBack} className='mt-6 rounded-md text-white px-5 py-2 bg-indigo-600 hover:bg-indigo-700' >Go Back</button>}
         <button
           onClick={handleSave}
           disabled={isSaving}
@@ -262,7 +263,7 @@ const BMICalculator = () => {
         >
           {isSaving ? 'Saving...' :!data?'Save':'Save to profile'}
 
-        </button>{data&& <button onClick={handleBack} className='mt-6 rounded-md text-white px-5 py-2 bg-indigo-600 hover:bg-indigo-700' >Go Back</button>}
+        </button>
         </span>
       </div>
     </div>

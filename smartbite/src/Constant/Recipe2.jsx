@@ -17,15 +17,17 @@ const Recipe2 = ({ data }) => {
         { mood: "Very Happy", cuisine: "Indian", mealType: "Dessert" },
         { mood: "Sad", cuisine: "American", mealType: "Dessert" },
         { mood: "Very sad", cuisine: "Italian", mealType: "Dessert" },
+
         { mood: "Energetic", cuisine: "Mediterranean", mealType: "High Protein" },
         { mood: "Romantic", cuisine: "French", mealType: "Dinner" },
         { mood: "Comfort", cuisine: "Southern", mealType: "Comfort Food" },
         { mood: "Comforted", cuisine: "Southern", mealType: "Comfort Food" },
         { mood: "Adventurous", cuisine: "Indian", mealType: "Fusion" },
-        { mood: "Relaxed", cuisine: "Japanese", mealType: "Light" },
+        { mood: "Excited", cuisine: "Japanese", mealType: "Light" },
+        { mood: "Very sad", cuisine: "Italian", mealType: "Dessert" },
         { mood: "Neutral", cuisine: "Japanese", mealType: "Light" },
-        { mood: "Motivated", cuisine: "Healthy", mealType: "Protein-packed" },
-        { mood: "Sophisticated", cuisine: "Italian", mealType: "Gourmet" },
+        { mood: "Motivated", cuisine: "Indian", mealType: "Protein-packed" },
+        { mood: "Sophisticate", cuisine: "American", mealType: "Gourmet" },
         { mood: "Cozy", cuisine: "American", mealType: "Stew" },
         { mood: "Refreshing", cuisine: "Vegan", mealType: "Salads" },
         { mood: "Indulgent", cuisine: "American", mealType: "Rich, Decadent" },
@@ -173,11 +175,20 @@ const Recipe2 = ({ data }) => {
                 key={index}
                 className="bg-slate-700 bg-opacity-90 p-4 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300"
               >
+                <div className='relative'>
                 <img
                   src={recipe.image}
                   alt={recipe.title}
                   className="w-full h-50 object-cover rounded-t-lg"
                 />
+                   <span  onClick={() => handleFav(recipe.id)}   className="absolute z-20 top-0 right-0">
+  <lord-icon
+    src="https://cdn.lordicon.com/ulnswmkk.json"
+    trigger="click"
+    state="morph-heart"
+    colors="primary:#000"
+    style={{ width: 45, height: 45 }}
+  ></lord-icon></span></div>
                 <div className="mt-4">
                   <h3 className="text-lg font-semibold">{recipe.title}</h3>
                   <button
@@ -211,6 +222,7 @@ const Recipe2 = ({ data }) => {
           alt={selectedRecipe.title}
           className="w-full lg:w-[750px] h-auto object-cover rounded-3xl shadow-lg transition-transform duration-300 hover:scale-110 hover:shadow-2xl"
         />
+      
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-70 transition-opacity duration-300 rounded-3xl"></div>
         <span className="absolute bottom-4 right-6 text-white bg-black bg-opacity-50 px-4 py-2 rounded-full text-sm group-hover:scale-105 group-hover:shadow-lg transform transition-transform duration-300">
           High-Resolution Image
