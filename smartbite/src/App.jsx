@@ -9,7 +9,7 @@ import BMICalculator from './Pages/BMI';
 import RecipeMaker from './Component/RecipeMaker';
 import Profile from './Constant/Profile';
 import Allergies from './Pages/Allergies';
-import Mood from './pages/Mood';
+import Mood from './Pages/Mood';
 import Lately from './Pages/Lately';
 import ImageUpload from './Constant/ImageUpload';
 import Recipe2 from './Constant/Recipe2';
