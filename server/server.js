@@ -12,7 +12,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const PORT = process.env.port||3001;
 app.use(cors({
-  origin: 'http://localhost:5173', 
+  origin: 'https://smartbite2.vercel.app', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
 app.use(express.urlencoded({ extended: true }));
@@ -269,10 +269,10 @@ app.post('/api/auth/signup', async (req, res) => {
 
 app.post('/api/auth/login', async (req, res) => {
   const { user, password } = req.body;
-
   try {
     const foundUser = await User.findOne({ user });
-
+   
+   
     if (foundUser) {
   
       const isMatch = await foundUser.matchPassword(password);
