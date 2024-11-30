@@ -11,7 +11,10 @@ const axios = require("axios");
 const app = express();
 const bodyParser = require("body-parser");
 const PORT = process.env.port||3001;
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+}));
 app.use(express.urlencoded({ extended: true }));
 const Fuse = require("fuse.js");
 
