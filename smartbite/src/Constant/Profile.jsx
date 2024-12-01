@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import male from "../assets/male.svg";
 import female from "../assets/femail.svg";
+import {useNavigate  } from 'react-router-dom';
 
 const Profile = ({ data, setShowProfile, setdata }) => {
   const genderis = data.info.gender;
+  const navigate = useNavigate();
   const [profileImage, setProfileImage] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 const [setshowallergy, setsetshowallergy] = useState("");
@@ -86,7 +88,7 @@ const [setshowallergy, setsetshowallergy] = useState("");
   const handleLogout = () => {
   
     localStorage.removeItem('token');
-    window.location.href = '/login'; 
+    navigate('/login')
   }
 
   return (
