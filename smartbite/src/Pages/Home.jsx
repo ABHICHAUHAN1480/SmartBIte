@@ -29,8 +29,7 @@ const Home = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      toast("No token found. Please login again.");
-      setTimeout(() => navigate("/login"), 3000);
+       navigate("/login")
     }
   }, [navigate]);
 

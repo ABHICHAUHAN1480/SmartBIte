@@ -187,9 +187,9 @@ const [setshowallergy, setsetshowallergy] = useState("");
             { label: "Weight", value: `${data.info.weight} kg` },
             { label: "Height", value: `${data.info.height} cm` }]
             .map(({ label, value }) => (
-              <div className="flex justify-between items-center" key={label}>
+              <div className="flex justify-between overflow-y-scroll div3   items-center" key={label}>
                 <span className="font-semibold text-gray-700">{label}:</span>
-                <span className="text-gray-800">{value}</span>
+                <span className="text-gray-800  ">{value}</span>
               </div>
             ))}
   

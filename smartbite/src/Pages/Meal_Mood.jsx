@@ -25,14 +25,13 @@ const Meal_Mood = () => {
     window.scrollTo({
       top: 0,
     });
-  
+
 }, [])
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      toast("No token found. Please login again.");
-      setTimeout(() => navigate("/login"), 3000);
+     navigate("/login")
     }
   }, [navigate]);
 
