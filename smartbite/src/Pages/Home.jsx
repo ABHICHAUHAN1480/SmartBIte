@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom'
 import { useRef } from 'react'
 const Home = () => {
   const featuresRef = useRef(null);
-
+  const navigate = useNavigate();
   const scrollToFeatures = () => {
     const offset = 50; 
     const elementPosition = featuresRef.current.getBoundingClientRect().top;
@@ -24,6 +24,13 @@ const Home = () => {
       behavior: "smooth",
     });
   };
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast("No token found. Please login again.");
+      setTimeout(() => navigate("/login"), 3000);
+    }
+  }, [navigate]);
 
 useEffect(() => {
     window.scrollTo({
@@ -33,7 +40,7 @@ useEffect(() => {
 }, [])
 
 
-  const navigate = useNavigate();
+
   // trail k liye hai nakli data
   const activityData = [
     { value: 0.7,  startColor: '#FF6347',endColor: '#FFC300',icon: del }, 

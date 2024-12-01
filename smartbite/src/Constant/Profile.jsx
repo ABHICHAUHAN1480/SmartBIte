@@ -51,7 +51,7 @@ const [setshowallergy, setsetshowallergy] = useState("");
      
       localStorage.removeItem('token');
       alert('Your account has been deleted successfully.');
-      window.location.href = '/signup'; 
+      navigate('/signup'); 
     } catch (error) {
       console.error(error);
       alert('Error deleting your account. Please try again.');
