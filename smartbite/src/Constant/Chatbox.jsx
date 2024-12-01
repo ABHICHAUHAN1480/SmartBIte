@@ -68,7 +68,7 @@ const Chatbox = ( {setshowchatbox}) => {
   };
 
   return (
-    <div className=" fixed inset-0 flex sm:max-h-[80vh] flex-col items-center justify-center p-4 sm:ml-[25%] md:ml-[35%] lg:ml-[50%] xl:ml-[55%] 2xl:ml-[67%] div3 sm:w-[60%]  sm:mt-[7%] md:w-1/2 lg:w-[400px] bg-gray-100 rounded-lg max-w-full z-50 shadow-xl border border-gray-300">
+    <div className=" fixed inset-0 flex sm:max-h-[80vh] flex-col items-center justify-center p-4 sm:ml-[25%] md:ml-[35%] lg:ml-[55%] xl:ml-[66%] 2xl:ml-[67%] div3 sm:w-[60%]  sm:mt-[7%] md:w-1/2 lg:w-[400px] bg-gray-100 rounded-lg max-w-full z-50 shadow-xl border border-gray-300">
       <span  onClick={() => setshowchatbox(false)} className="absolute top-0 right-0 cursor-pointer sm:hidden">  <lord-icon
         src="https://cdn.lordicon.com/nqtddedc.json"
         trigger="hover"

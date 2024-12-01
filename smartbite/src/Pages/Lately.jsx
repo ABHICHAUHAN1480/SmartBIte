@@ -65,7 +65,6 @@ const handlecross=()=>{
     <div className="relative  min-h-screen w-full overflow-hidden font-serif">
      {showRecipe && <Recipe2 data={moodText}/>}
         <ToastContainer
-        
         autoClose={3000}
         hideProgressBar={false}
       
@@ -76,7 +75,7 @@ const handlecross=()=>{
       <img className=' absolute h-full w-full opacity-50' src={oip} />
     
       <div className=' m-auto z-10 div1 bg-opacity-50 rounded-2xl bg-zinc-900   ' >
-        <span onClick={handlecross} className='absolute ml-[96%] mt-5'>
+        <span onClick={handlecross} className='absolute top-3 right-3'>
       <lord-icon
     src="https://cdn.lordicon.com/nqtddedc.json"
     trigger="in"
@@ -86,16 +85,15 @@ const handlecross=()=>{
     style={{ width: "40px", height: "40px" }}>
 </lord-icon>
 </span>
-        <div className='text-[55px] text-center mt-16 '>What are u doing lately   </div>
-        <div className='flex flex-col justify-around mt-32  gap-11 items-center '>
-         <div className='w-1/2 '>  <input onChange={handleChange} className=' w-8/12  mr-16 py-2  px-4 text-slate-50 rounded-2xl   bg-black bg-opacity-35' placeholder='Search' value={form.search} name='search' />
+        <div className='text-[35px] sm:text-[40px] md:text-[55px] text-center mt-16 '>What are u doing lately   </div>
+        <div className='flex flex-col justify-around mt-16 sm:mt-24 md:mt-32  gap-5 md:gap-11 items-center '>
+         <div className='w-full md:w-1/2'>  <input onChange={handleChange} className=' w-6/12 md:w-7/12  mr-16 py-2  px-4 text-slate-50 rounded-2xl   bg-black bg-opacity-35' placeholder='Search' value={form.search} name='search' />
          <button onClick={handleSave} className='py-2 px-6 bg-blue-700 rounded-3xl hover:border'>Save</button></div>
-          <div className='mx-auto  div2 overflow-y-scroll gap-14 flex flex-wrap '>
+          <div className='mx-auto  w-[100vw]  md:w-[70vw] lg:w-[50%] h-[400px] div3 overflow-y-scroll gap-4 md:gap-14 flex flex-wrap  '>
           {Array.from(s3).map((i, index) => (
               <div 
                 key={index} 
-                className='bg-zinc-800 bg-opacity-70 h-11 cursor-pointer flex items-center gap-4 hover:border text-slate-50 px-4 py-2 rounded-2xl'
-                onClick={() => handleRemove(i)}
+                className='bg-zinc-800 bg-opacity-70 h-11 cursor-pointer flex items-center gap-2 md:gap-4 hover:border text-slate-50 px-2 sm:px-4 py-2 rounded-2xl' onClick={() => handleRemove(i)}
               >
                 {i}
                 <span className='invert'>
@@ -104,7 +102,7 @@ const handlecross=()=>{
               </div>
             ))}
             {s2.map((i, index) => (
-              <span key={index} onClick={() => handleSubmit(i)}  className='bg-zinc-800 bg-opacity-70 h-11 cursor-pointer hover:border text-slate-50  px-10 py-2 rounded-2xl'>{i}</span>
+              <span key={index} onClick={() => handleSubmit(i)}  className='bg-zinc-800 bg-opacity-70 h-11 cursor-pointer hover:border text-slate-50  px-4 text-sm sm:text-[18px] sm:px-10 py-2 rounded-2xl'>{i}</span>
             ))}
           </div>
         </div>

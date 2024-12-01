@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import axios from "axios";
 
 const Camera = ({ setshowc }) => {
@@ -9,6 +9,16 @@ const Camera = ({ setshowc }) => {
   const canvasRef = useRef(null);
   const [showcamera, setshowcamera] = useState(true)
 
+  useEffect(() => {
+        
+        
+    document.body.classList.add("body-no-scroll");
+  
+    return () => {
+        
+        document.body.classList.remove("body-no-scroll");
+    };
+  }, []);
   // Start the camera
   const startCamera = async () => {
     try {

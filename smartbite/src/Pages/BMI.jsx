@@ -108,165 +108,155 @@ const BMICalculator = () => {
   return (
 
 
-    <div className="min-h-screen flex flex-col items-center justify-center text-white p-6">
-      <img
-        className="w-full h-full absolute -z-10 opacity-35 "
-        src={bmiimg}
-        alt="BMI Background"
-      />
-      <div className="flex relative flex-col items-center w-1/2 spediv p-3 rounded-3xl justify-center">
-      {data && <span onClick={handleBack} className='absolute z-20 top-3 right-5'>   <lord-icon
-        src="https://cdn.lordicon.com/nqtddedc.json"
-        trigger="hover"
-        state="hover-cross-2"
-        colors="primary:#fff"
-        style={{ width: 40, height: 40 }}
-      /></span>}
-        <h2 className="text-[40px] font-serif font-bold mb-8 text-indigo-400">BMI Calculator</h2>
-
-        <div className="flex justify-center mb-8">
-          <div className={`relative ${glowEffect}`}>
-          <svg width="230" height="230" viewBox="0 0 200  150" xmlns="http://www.w3.org/2000/svg">
-
-  <path
-    d="M20,100 A80,80 0 0,1 180,100"
-    stroke="#374151"
-    strokeWidth="15"
-    fill="none"
-    strokeLinecap="round"
-  />
-
-  {/* Foreground Arc */}
-  <path
-    d="M20,100 A80,80 0 0,1 180,100" // Same path as the background arc
-    stroke={gaugeColor } 
-    strokeWidth="15"
-    fill="none"
-    strokeDasharray="251.32" // Semi-circle circumference: π * 80
-    strokeDashoffset={`${251.32 - (clampedAngle / 180) * 251.32}`} // Calculate visible arc length
-    strokeLinecap="round"
-    style={{
-      transition: "stroke-dashoffset 0.6s ease, stroke 0.6s ease",
-    }}
-  />
-
-  {/* Needle */}
-  <line
-    x1="100"
-    y1="100"
-    x2="100"
-    y2="30"
-    stroke="red"
-    strokeWidth="4"
-    transform={`rotate(${clampedAngle - 90} 100 100)`} // Rotate needle based on clampedAngle
-    style={{
-      transition: "transform 0.6s ease",
-    }}
-  />
-
-  {/* Center Circle */}
-  <circle cx="100" cy="100" r="8" fill="red" stroke="red" strokeWidth="3" />
-
-  {/* BMI Value */}
-  <text
-    x="100"
-    y="130"
-    textAnchor="middle"
-    fill="white"
-    fontSize="20"
-    fontWeight="bold"
-  >
-    {bmi || "--"}
-  </text>
-
-
-
-</svg>
-
-
-          </div>
-        </div>
-
-        <div className={`text-center font-semibold ${categoryColor} -my-20 text-lg mb-4`}>
-          Category: {bmiCategory}
-        </div>
-
-        <div className="w-full max-w-md space-y-6">
-          <div>
-            <label htmlFor="weight-slider" className="block text-sm mb-2 text-indigo-300">
-              Weight (kg): {weight}
-            </label>
-            <input
-              id="weight-slider"
-              type="range"
-              min="40"
-              max="150"
-              value={weight}
-              onChange={(e) => setWeight(Number(e.target.value))}
-              className="w-full h-2 bg-indigo-700 rounded-full appearance-none cursor-pointer"
+    <div className="min-h-screen flex flex-col items-center justify-center text-white p-0 sm:p-6">
+    <img
+      className="w-[100vw] top-0 h-[100vh] fixed lg:absolute -z-10 opacity-35"
+      src={bmiimg}
+      alt="BMI Background"
+    />
+    <div className="flex  overflow-x-hidden relative flex-col items-center w-full sm:w-4/5 md:w-1/2 spediv p-3 rounded-3xl justify-center">
+      {data && (
+        <span onClick={handleBack} className="absolute z-20 top-3 right-3 sm:right-5">
+          <lord-icon
+            src="https://cdn.lordicon.com/nqtddedc.json"
+            trigger="hover"
+            state="hover-cross-2"
+            colors="primary:#fff"
+            style={{ width: 40, height: 40 }}
+          />
+        </span>
+      )}
+      <h2 className="text-[32px] sm:text-[40px] font-serif font-bold mb-8 text-indigo-400">BMI Calculator</h2>
+  
+      <div className="flex justify-center mb-8 w-full">
+        <div className={`relative ${glowEffect}`}>
+          <svg width="80%" className='sm:w-full mx-auto'  height="auto" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M20,100 A80,80 0 0,1 180,100"
+              stroke="#374151"
+              strokeWidth="15"
+              fill="none"
+              strokeLinecap="round"
             />
-          </div>
-
-          <div>
-            <label htmlFor="height-slider" className="block text-sm mb-2 text-indigo-300">
-              Height (cm): {height}
-            </label>
-            <input
-              id="height-slider"
-              type="range"
-              min="140"
-              max="220"
-              value={height}
-              onChange={(e) => setHeight(Number(e.target.value))}
-              className="w-full h-2 bg-indigo-700 rounded-full appearance-none cursor-pointer"
+            <path
+              d="M20,100 A80,80 0 0,1 180,100"
+              stroke={gaugeColor}
+              strokeWidth="15"
+              fill="none"
+              strokeDasharray="251.32"
+              strokeDashoffset={`${251.32 - (clampedAngle / 180) * 251.32}`}
+              strokeLinecap="round"
+              style={{
+                transition: "stroke-dashoffset 0.6s ease, stroke 0.6s ease",
+              }}
             />
-          </div>
-
-          <div>
-            <label htmlFor="gender-select" className="block text-sm mb-2 text-indigo-300">
-              Gender:
-            </label>
-            <select
-              id="gender-select"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-              className="w-full p-3 bg-gray-800 border border-indigo-600 rounded-lg text-indigo-300 focus:outline-none"
+            <line
+              x1="100"
+              y1="100"
+              x2="100"
+              y2="30"
+              stroke="red"
+              strokeWidth="4"
+              transform={`rotate(${clampedAngle - 90} 100 100)`}
+              style={{
+                transition: "transform 0.6s ease",
+              }}
+            />
+            <circle cx="100" cy="100" r="8" fill="red" stroke="red" strokeWidth="3" />
+            <text
+              x="100"
+              y="130"
+              textAnchor="middle"
+              fill="white"
+              fontSize="20"
+              fontWeight="bold"
             >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
+              {bmi || "--"}
+            </text>
+          </svg>
         </div>
-
-        {/* Health Recommendations */}
-        <div className="mt-8 bg-gray-800 p-4 rounded-lg text-center max-w-md shadow-lg">
-          <h3 className="text-lg font-semibold text-indigo-300">Health Recommendations</h3>
-          <p className="mt-2 text-sm text-gray-400">
-            {bmiCategory === 'Underweight' &&
-              'Consider a balanced diet with a focus on nutrient-dense foods.'}
-            {bmiCategory === 'Normal' && 'Maintain your current lifestyle for overall well-being.'}
-            {bmiCategory === 'Overweight' &&
-              'Focus on regular physical activity and balanced nutrition.'}
-            {bmiCategory === 'Obese' &&
-              'Consider a structured health plan with guidance from a healthcare provider.'}
-          </p>
+      </div>
+  
+      <div className={`text-center font-semibold ${categoryColor} -my-10 text-lg mb-4`}>
+        Category: {bmiCategory}
+      </div>
+  
+      <div className="w-full max-w-md space-y-6 ">
+        <div>
+          <label htmlFor="weight-slider" className="block text-sm mb-2  text-indigo-300">
+            Weight (kg): {weight}
+          </label>
+          <input
+            id="weight-slider"
+            type="range"
+            min="40"
+            max="150"
+            value={weight}
+            onChange={(e) => setWeight(Number(e.target.value))}
+            className="w-full h-2 bg-indigo-700 rounded-full appearance-none cursor-pointer"
+          />
         </div>
-
-        {/* Save Button */}<span className='flex gap-8'>
-        {data&& <button onClick={handleBack} className='mt-6 rounded-md text-white px-5 py-2 bg-indigo-600 hover:bg-indigo-700' >Go Back</button>}
+  
+        <div>
+          <label htmlFor="height-slider" className="block text-sm mb-2 text-indigo-300">
+            Height (cm): {height}
+          </label>
+          <input
+            id="height-slider"
+            type="range"
+            min="140"
+            max="220"
+            value={height}
+            onChange={(e) => setHeight(Number(e.target.value))}
+            className="w-full h-2 bg-indigo-700 rounded-full appearance-none cursor-pointer"
+          />
+        </div>
+  
+        <div>
+          <label htmlFor="gender-select" className="block text-sm mb-2 text-indigo-300">
+            Gender:
+          </label>
+          <select
+            id="gender-select"
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+            className="w-full p-3 bg-gray-800 border border-indigo-600 rounded-lg text-indigo-300 focus:outline-none"
+          >
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+      </div>
+  
+      <div className="mt-8 bg-gray-800 p-4 rounded-lg text-center max-w-md shadow-lg">
+        <h3 className="text-lg font-semibold text-indigo-300">Health Recommendations</h3>
+        <p className="mt-2 text-sm text-gray-400">
+          {bmiCategory === 'Underweight' &&
+            'Consider a balanced diet with a focus on nutrient-dense foods.'}
+          {bmiCategory === 'Normal' && 'Maintain your current lifestyle for overall well-being.'}
+          {bmiCategory === 'Overweight' &&
+            'Focus on regular physical activity and balanced nutrition.'}
+          {bmiCategory === 'Obese' &&
+            'Consider a structured health plan with guidance from a healthcare provider.'}
+        </p>
+      </div>
+  
+      <span className="flex flex-row gap-8">
+        {data && <button onClick={handleBack} className="mt-6 rounded-md text-white px-5 py-2 bg-indigo-600 hover:bg-indigo-700">
+          Go Back
+        </button>}
         <button
           onClick={handleSave}
           disabled={isSaving}
-          className={`mt-6 px-5 py-2 ${
-            isSaving ? 'bg-indigo-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'
-          } rounded-md text-white`}
+          className={`mt-6 px-5 py-2 ${isSaving ? 'bg-indigo-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'} rounded-md text-white`}
         >
-          {isSaving ? 'Saving...' :!data?'Save':'Save to profile'}
-
+          {isSaving ? 'Saving...' : !data ? 'Save' : 'Save to profile'}
         </button>
-        </span>
-      </div>
+      </span>
     </div>
+  </div>
+  
+  
   );
 };
 

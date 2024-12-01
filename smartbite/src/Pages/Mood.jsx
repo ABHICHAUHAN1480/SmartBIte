@@ -181,86 +181,94 @@ const Mood = () => {
 
 
   return (
-    <div className="h-screen  w-full absolute text-white flex flex-col items-center p-6"
-    style={{
+    <div className="h-screen w-full absolute text-white flex flex-col items-center p-4 sm:p-6" style={{
       background: `radial-gradient(circle at center, rgba(${255 - mood * 2.5}, ${
         mood * 2.5
       }, 255, 0.8), rgba(${30 + mood}, ${30 + mood}, 50, 0.9))`,
-      transition: "background 0.8s ease",
-    }}
-    >
-    {/* Back Button */}
+      transition: "background 0.8s ease", }}
+  >
+    
     <span
       onClick={handleback}
-      className="absolute top-6 right-6 cursor-pointer"
+      className="absolute top-4 sm:top-6 right-4 sm:right-6 cursor-pointer"
     >
       <lord-icon
-        style={{ width: "50px", height: "50px" }}
+        style={{ width: "40px", height: "40px" }}
         src="https://cdn.lordicon.com/nqtddedc.json"
         trigger="hover"
         colors="primary:#66eece"
       ></lord-icon>
     </span>
   
-    {/* Header */}
-    <div className="mt-12 text-center">
-      <h2 className="text-5xl font-bold font-serif mb-4">How are you feeling?</h2>
-      <p className="text-lg text-gray-300">Move the slider or select an emoji below to express your mood.</p>
+    
+    <div className="mt-8 sm:mt-12 text-center px-4">
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-serif mb-4">
+        How are you feeling?
+      </h2>
+      <p className="text-sm sm:text-lg text-gray-300">
+        Move the slider or select an emoji below to express your mood.
+      </p>
     </div>
   
-    {/* Mood Emoji and Label */}
-    <div className="flex flex-col items-center mt-10">
+    
+    <div className="flex flex-col items-center mt-6 sm:mt-10">
       <img
         src={currentEmoji}
         alt="Current Mood Emoji"
-        className="h-20 w-20 transition-transform duration-300"
+        className="h-16 w-16 sm:h-20 sm:w-20 transition-transform duration-300"
       />
-      <span className="text-4xl font-semibold mt-4">{currentLabel}</span>
+      <span className="text-2xl sm:text-4xl font-semibold mt-4">
+        {currentLabel}
+      </span>
     </div>
   
-    {/* Slider */}
-    <div className="w-1/2 mt-8 bg-gray-700 bg-opacity-50 p-4 rounded-2xl shadow-lg">
+   
+    <div className="w-full sm:w-3/4 lg:w-1/2 mt-6 sm:mt-8 bg-gray-700 bg-opacity-50 p-3 sm:p-4 rounded-2xl shadow-lg">
       <div
         ref={sliderRef}
         className="relative h-2 rounded-lg cursor-pointer"
-        style={{ background: getSliderColor() }} 
+        style={{ background: getSliderColor() }}
         onClick={handleSliderClick}
       >
         <div
-          className="absolute top-0 -mt-2 w-6 h-6 bg-blue-500 rounded-full cursor-pointer shadow-md transition-transform duration-300 ease-in-out"
-          style={{ left: `${mood}%`, transform: 'translateX(-50%)' }}
+          className="absolute top-0 -mt-2 w-5 h-5 sm:w-6 sm:h-6 bg-blue-500 rounded-full cursor-pointer shadow-md transition-transform duration-300 ease-in-out"
+          style={{ left: `${mood}%`, transform: "translateX(-50%)" }}
           onMouseDown={handleMouseDown}
         ></div>
       </div>
     </div>
   
-    {/* Mood Level and Save Button */}
-    <div className="flex items-center mt-6 text-lg">
+    
+    <div className="flex flex-col sm:flex-row items-center mt-6 text-base sm:text-lg px-4 gap-4 sm:gap-8">
       <p>
-        Mood Level: <span className="font-semibold text-yellow-400">{Math.round(mood)}</span>
+        Mood Level:{" "}
+        <span className="font-semibold text-yellow-400">
+          {Math.round(mood)}
+        </span>
       </p>
       <button
         onClick={handleSave}
-        className="ml-8 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-md transition-transform duration-300 transform hover:scale-105"
+        className="px-6 py-2 sm:py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-md transition-transform duration-300 transform hover:scale-105"
       >
         Save
       </button>
     </div>
   
-    {/* Mood Emoji Grid */}
-    <div className="mt-8 w-11/12 max-h-[40vh] overflow-y-auto div3 grid grid-cols-3 md:grid-cols-5 gap-6 p-4 bg-gray-800 bg-opacity-40 rounded-3xl shadow-lg">
+  
+    <div className="mt-8 w-full sm:w-11/12 max-h-[40vh] overflow-y-auto div3 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 sm:gap-6 p-4 bg-gray-800 bg-opacity-40 rounded-3xl shadow-lg">
       {moodarray.map((emoji, index) => (
         <div
           key={index}
           onClick={() => handleEmojiClick(emoji.text)}
-          className="flex flex-col items-center cursor-pointer p-4 bg-gray-700 bg-opacity-50 rounded-xl shadow-md hover:bg-opacity-100 hover:scale-105 transition-transform duration-300"
+          className="flex flex-col items-center cursor-pointer p-3 sm:p-4 bg-gray-700 bg-opacity-50 rounded-xl shadow-md hover:bg-opacity-100 hover:scale-105 transition-transform duration-300"
         >
-          <img src={emoji.emoji} alt={emoji.text} className="h-14 mb-2" />
-          <span className="text-sm font-semibold">{emoji.text}</span>
+          <img src={emoji.emoji} alt={emoji.text} className="h-12 sm:h-14 mb-2" />
+          <span className="text-xs sm:text-sm font-semibold">{emoji.text}</span>
         </div>
       ))}
     </div>
   </div>
+  
   
   );
 };

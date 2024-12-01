@@ -241,58 +241,64 @@ const Inventory = () => {
     <div className="relative min-h-screen w-full bg-gradient-to-b from-gray-900 to-gray-700 text-gray-200 cursor-default overflow-hidden">
     <Navbar />
     <ToastContainer autoClose={3000} hideProgressBar={false} closeOnClick />
-  
-    <div className="mt-36 mb-20">
-  <div className="relative space-y-12">
-    {/* Image Upload or Camera Component */}
     {show && <ImageUpload setshow={setshow} setform={setform} />}
     {showc && <Camera setshowc={setshowc} />}
+    <div className="mt-36 mb-20">
+  <div className="relative space-y-12">
 
-  
-    {showexpired && showexpired1 && (
-  <div className="bg-gradient-to-r div3 from-red-600 to-yellow-700 text-white absolute z-30 ml-[4%] w-11/12 mx-auto rounded-2xl p-8 h-[80vh] shadow-xl overflow-y-scroll transform transition-all">
    
-    <span
-      className="absolute top-4 z-30 right-4 cursor-pointer transition-transform hover:scale-110"
-      onClick={() => setshowexpired(false)}
-    >
-      <lord-icon
-        src="https://cdn.lordicon.com/nqtddedc.json"
-        trigger="hover"
-        state="hover-cross-2"
-        colors="primary:#fff"
-        style={{ width: 35, height: 35 }}
-      />
-    </span>
-    <h1 className="text-4xl font-bold font-serif text-center mt-6 z-10 text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-red-500">Expired Items</h1>
-    <div className="mt-8 font-serif z-10 text-gray-100">
-      <div className="flex gap-3 items-center justify-center font-semibold text-xl text-yellow-200">
-        <span>Expired items:</span>
-        <div className="flex gap-2 text-yellow-300">
-          {expired.map((item, index) => (
-            <div key={index} className="underline">{item.item}{index !== expired.length - 1 && ','}</div>
-          ))}
+   
+
+    {showexpired  && showexpired1 && (
+  <div className="bg-gradient-to-r div3 -100 from-red-600 to-yellow-700 text-white fixed inset-0 z-30 flex justify-center items-center p-4 sm:p-6 md:p-8">
+    <div className="relative w-full  max-w-3xl bg-opacity-50 rounded-2xl bg-zinc-900 p-6 sm:p-8 shadow-xl overflow-y-auto transform transition-all">
+      <span
+        className="absolute top-4 right-4 cursor-pointer transition-transform hover:scale-110"
+        onClick={() => setshowexpired(false)}
+      >
+        <lord-icon
+          src="https://cdn.lordicon.com/nqtddedc.json"
+          trigger="hover"
+          state="hover-cross-2"
+          colors="primary:#fff"
+          style={{ width: 35, height: 35 }}
+        />
+      </span>
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-serif text-center text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-red-500">
+        Expired Items
+      </h1>
+      <div className="mt-6 font-serif text-sm sm:text-base md:text-lg text-gray-100">
+        <div className="flex flex-col sm:flex-row gap-3 items-center justify-center font-semibold">
+          <span>Expired items:</span>
+          <div className="flex flex-wrap gap-2 text-yellow-300 text-center">
+            {expired.map((item, index) => (
+              <div key={index} className="underline">
+                {item.item}
+                {index !== expired.length - 1 && ','}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="mt-6 max-h-[50vh]  overflow-y-scroll div3">
-        <Table data={expired} setdata={setexpired} />
-      </div>
-      <div className="flex gap-4 justify-center mt-8">
-        <button
-          onClick={() => {
-            setshowexpired(false);
-            handleDelete(expired);
-          }}
-          className="px-6 py-2 bg-blue-600 rounded-xl hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
-        >
-          Delete All
-        </button>
-        <button
-          onClick={() => setshowexpired(false)}
-          className="px-6 py-2 bg-blue-600 rounded-xl hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
-        >
-          Later
-        </button>
+        <div className="mt-0 sm:mt-6 max-h-[40vh] scale-75 sm:scale-100  sm:max-h-[50vh] overflow-y-auto div3">
+          <Table data={expired} setdata={setexpired} />
+        </div>
+        <div className="flex flex-wrap gap-4 justify-center mt-0 sm:mt-8 ">
+          <button
+            onClick={() => {
+              setshowexpired(false);
+              handleDelete(expired);
+            }}
+            className="px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 text-sm sm:text-base"
+          >
+            Delete All
+          </button>
+          <button
+            onClick={() => setshowexpired(false)}
+            className="px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 text-sm sm:text-base"
+          >
+            Later
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -300,43 +306,45 @@ const Inventory = () => {
 
 {/* Expiring Items Modal */}
 {showexpireing && showexpireing1 && (
-  <div className="bg-gradient-to-r div3 from-green-600 to-blue-600 text-white absolute z-20 ml-[4%] w-11/12 mx-auto rounded-2xl p-8 h-[80vh] shadow-xl overflow-y-scroll transform transition-all">
-    <span
-      className="absolute top-4 right-4 cursor-pointer z-10 transition-transform hover:scale-110"
-      onClick={() => setshowexpireing(false)}
-    >
-      <lord-icon
-        src="https://cdn.lordicon.com/nqtddedc.json"
-        trigger="hover"
-        state="hover-cross-2"
-        colors="primary:#fff"
-        style={{ width: 35, height: 35 }}
-      />
-    </span>
-    <h1 className="text-4xl font-bold font-serif text-center mt-4">Items Expiring Soon</h1>
-    <div className="mt-12 font-serif text-lg text-gray-800">
-      <div className="flex gap-3 items-center justify-center font-semibold text-xl">
-        <span>Expiring items:</span>
-        <div className="flex gap-2 text-red-600">
-          {expiring.map((item, index) => (
-            <div key={index} className="underline">{item.item}{index !== expiring.length - 1 && ','}</div>
-          ))}
+  <div className="bg-gradient-to-r div3 from-green-600 to-blue-600 text-white fixed inset-0 z-30 flex justify-center items-center p-4 sm:p-6 md:p-8">
+    <div className="relative w-full max-w-3xl bg-opacity-50 rounded-2xl bg-zinc-900 p-6 sm:p-8 shadow-xl overflow-y-auto transform transition-all">
+      <span
+        className="absolute top-4 right-4 cursor-pointer transition-transform hover:scale-110"
+        onClick={() => setshowexpireing(false)}
+      >
+        <lord-icon
+          src="https://cdn.lordicon.com/nqtddedc.json"
+          trigger="hover"
+          state="hover-cross-2"
+          colors="primary:#fff"
+          style={{ width: 35, height: 35 }}
+        />
+      </span>
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-serif text-center">
+        Items Expiring Soon
+      </h1>
+      <div className="mt-6 font-serif text-sm sm:text-base md:text-lg text-gray-100">
+        <div className="flex flex-col sm:flex-row gap-3 items-center justify-center font-semibold">
+         
+          <div className="flex flex-wrap gap-2 text-red-600 text-center"> <span>Expiring items:</span>
+            {expiring.map((item, index) => (
+              <div key={index} className="underline">
+                {item.item}
+                {index !== expiring.length - 1 && ','}
+              </div>
+            ))}
+            <span>in a week</span>
+          </div>
+          
         </div>
-        <span>in a week</span>
+        <div className="mt-6 max-h-[40vh] scale-75 sm:scale-100 sm:max-h-[50vh] overflow-y-auto div3">
+          <Table data={expiring} setdata={setexpiring} />
+        </div>
       </div>
-      <div className="mt-6 max-h-[50vh] overflow-y-scroll div3">
-        <Table data={expiring} setdata={setexpiring} />
-      </div>
-      
     </div>
   </div>
-)}
-
-
-
-   
-
-    {/* Inventory Input Section */}
+)}   
+  {/* Inventory Input Section */}
     <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-zinc-900 text-white p-6 sm:p-12 mx-auto max-w-2xl lg:max-w-4xl rounded-xl shadow-2xl">
   <h2 className="text-3xl sm:text-4xl font-extrabold text-center mb-6 sm:mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-500">
     Add Item to Inventory
@@ -389,7 +397,7 @@ const Inventory = () => {
 
     {/* Expiration Date and Quantity Inputs */}
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-2 sm:mb-8">
-      {/* Expiration Date Input */}
+      
       <div>
         <label className="text-base sm:text-lg font-semibold text-gray-300 mb-2 block">
           Expiration Date

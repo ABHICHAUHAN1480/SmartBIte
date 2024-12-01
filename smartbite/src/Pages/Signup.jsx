@@ -55,22 +55,65 @@ const Signup = () => {
   return (
     <>
   <ToastContainer autoClose={3000} hideProgressBar={false} closeOnClick  theme= "dark" position="top-right"/>
-    <div className="relative min-h-screen w-full overflow-hidden">
-      <div className='bg-zinc-950 h-screen flex'>
-        <img className='absolute m-2 w-full opacity-30' src={login} alt="Background" />
-        <div className='m-auto z-10 w-1/4 bg-opacity-50 rounded-2xl bg-zinc-900'>
-          <form className="flex flex-col px-4 py-10" onSubmit={handleSubmit}>
-            <input onChange={HandleChange} className='text-[20px] text-slate-50 rounded-md p-2 outline-none hover:border cursor-pointer m-3 bg-zinc-800' type='text' name='name' value={form.name} placeholder='Name' />
-            <input onChange={HandleChange} className='text-[20px] text-slate-50 rounded-md p-2 outline-none hover:border cursor-pointer m-3 bg-zinc-800' type='text' name='user' value={form.user} placeholder='User Name' />
-            <input onChange={HandleChange} className='text-[20px] text-slate-50 rounded-md p-2 outline-none hover:border cursor-pointer m-3 bg-zinc-800' type='email' name='email' value={form.email} placeholder='Email ID' />
-            <input onChange={HandleChange} className='text-[20px] text-slate-50 rounded-md p-2 outline-none hover:border cursor-pointer m-3 bg-zinc-800' type='password' name='password' value={form.password} placeholder='Set Password' />
-            <input onChange={HandleChange} className='text-[20px] text-slate-50 rounded-md p-2 outline-none hover:border cursor-pointer m-3 bg-zinc-800' type='password' name='password_confirmation' value={form.password_confirmation} placeholder='Confirm Password' />
-            <button className="bg-blue-500 hover:bg-blue-700 w-1/3 m-auto mt-3 text-slate-100 font-bold py-2 px-4 rounded">Sign up</button>
-            <Link to='/login' className='text-blue-800 hover:text-blue-700 mx-auto mt-5 text-[18px]'>Already have an account?</Link>
-          </form>
-        </div>
-      </div>
+  <div className="relative min-h-screen w-full overflow-hidden">
+  <div className="bg-zinc-950 h-screen flex">
+    <img className="absolute m-2 w-full h-full object-cover opacity-20" src={login} alt="Background" />
+    <div className="m-auto z-10 w-full sm:w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4 bg-opacity-50 rounded-2xl bg-zinc-900 p-6">
+      <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
+        <input 
+          onChange={HandleChange} 
+          className="text-[16px] md:text-[20px] text-slate-50 rounded-md p-3 outline-none hover:border cursor-pointer bg-zinc-800" 
+          type="text" 
+          name="name" 
+          value={form.name} 
+          placeholder="Name" 
+        />
+        <input 
+          onChange={HandleChange} 
+          className="text-[16px] md:text-[20px] text-slate-50 rounded-md p-3 outline-none hover:border cursor-pointer bg-zinc-800" 
+          type="text" 
+          name="user" 
+          value={form.user} 
+          placeholder="User Name" 
+        />
+        <input 
+          onChange={HandleChange} 
+          className="text-[16px] md:text-[20px] text-slate-50 rounded-md p-3 outline-none hover:border cursor-pointer bg-zinc-800" 
+          type="email" 
+          name="email" 
+          value={form.email} 
+          placeholder="Email ID" 
+        />
+        <input 
+          onChange={HandleChange} 
+          className="text-[16px] md:text-[20px] text-slate-50 rounded-md p-3 outline-none hover:border cursor-pointer bg-zinc-800" 
+          type="password" 
+          name="password" 
+          value={form.password} 
+          placeholder="Set Password" 
+        />
+        <input 
+          onChange={HandleChange} 
+          className="text-[16px] md:text-[20px] text-slate-50 rounded-md p-3 outline-none hover:border cursor-pointer bg-zinc-800" 
+          type="password" 
+          name="password_confirmation" 
+          value={form.password_confirmation} 
+          placeholder="Confirm Password" 
+        />
+        <button 
+          className="bg-blue-500 hover:bg-blue-700 w-full sm:w-2/3 lg:w-1/3 mx-auto mt-3 text-slate-100 font-bold py-2 px-4 rounded">
+          Sign up
+        </button>
+        <Link 
+          to="/login" 
+          className="text-blue-800 hover:text-blue-700 mx-auto text-[16px] sm:text-[18px]">
+          Already have an account?
+        </Link>
+      </form>
     </div>
+  </div>
+</div>
+
     </>  
     );
 }
