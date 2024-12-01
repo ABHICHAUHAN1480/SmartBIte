@@ -11,6 +11,8 @@ import Ring from '../Constant/Ring'
 import  NutritionalGraphs from '../Constant/BarGraphs'
 import { useNavigate } from 'react-router-dom'
 import { useRef } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Home = () => {
   const featuresRef = useRef(null);
   const navigate = useNavigate();
@@ -73,7 +75,8 @@ useEffect(() => {
     { day: 'Sun', Protein: 50, Calories: 0, Fat: 70 },
   ];
  
-  return (
+  return (<>
+  <ToastContainer autoClose={3000} hideProgressBar={false} closeOnClick  theme= "dark" position="top-right"/>
    <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-[#1a1a1a] via-[#333] to-[#555] animate-gradient-animate">
   <Navbar />
   <div className="mt-20 mb-20">
@@ -285,7 +288,7 @@ useEffect(() => {
   <Footer />
 </div>
 
-  
+  </>
   
   
 

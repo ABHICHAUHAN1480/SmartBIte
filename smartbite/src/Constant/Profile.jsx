@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import male from "../assets/male.svg";
 import female from "../assets/femail.svg";
 import {useNavigate  } from 'react-router-dom';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Profile = ({ data, setShowProfile, setdata }) => {
   const genderis = data.info.gender;
   const navigate = useNavigate();
@@ -91,7 +92,7 @@ const [setshowallergy, setsetshowallergy] = useState("");
     navigate('/login')
   }
 
-  return (
+  return (<><ToastContainer autoClose={3000} hideProgressBar={false} closeOnClick  theme= "dark" position="top-right"/>
     <div className="w-[350px] md:w-[400px] sm:w-[400px]  fixed z-[9999] top-24 right-6 md:right-0 sm:right-0 text-black font-serif bg-gradient-to-br from-green-200 via-green-300 to-green-100 bg-opacity-90 p-6 rounded-2xl max-h-[80vh] shadow-2xl overflow-y-auto div3 transition-transform transform scale-100 hover:scale-105 duration-300">
     {/* Close Icon */}
     <button
@@ -235,7 +236,7 @@ const [setshowallergy, setsetshowallergy] = useState("");
     </div>
   </div>
   
-  
+  </>
 
   );
 };
