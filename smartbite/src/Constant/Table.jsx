@@ -63,8 +63,8 @@ const Table = ({ data, setdata }) => {
           <tr key={index} className={`transition duration-300 ease-in-out ${      i.daysLeft <= 0 ? 'bg-red-700 hover:bg-gray-700 bg-opacity-40' : 'hover:bg-gray-700'    }`}>
             <td className="py-4 px-6 text-center text-base">{i.item}</td>
             <td className="py-4 px-6 text-center text-base">{i.expire}</td>
-            <td className="py-4 px-6 text-center text-base">{i.quantity}</td>
-            <td className={`py-4 px-6 text-center text-base font-semibold ${   i.daysLeft <= 5 ? 'text-red-400' : 'text-yellow-400'  }`}>{i.daysLeft}
+            <td className="py-4 px-6 text-center text-base">{i.quantity} {i.unit}</td>
+            <td className={`py-4 px-6 text-center text-base font-semibold ${   i.daysLeft <= 5 ? 'text-red-400' : 'text-yellow-400'  }`}>{i.daysLeft} 
             </td>
             <td onClick={() => handledelete(i.id)} className="flex justify-center items-center py-3 px-4 cursor-pointer hover:bg-red-600 rounded-full transition duration-300 transform hover:scale-110" >
               <lord-icon

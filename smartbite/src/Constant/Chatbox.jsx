@@ -95,18 +95,18 @@ const Chatbox = ( {setshowchatbox}) => {
       {messages.map((msg, index) => (
         <div
           key={index}
-          className={`mb-4 ${msg.sender === "user" ? "text-right" : "text-left"}`}
+          className={`mb-4  ${msg.sender === "user" ? "text-right" : "text-left"}`}
         >
           <p className={`inline-block px-4 py-2 rounded-2xl shadow-sm ${ msg.sender === "user" ? "bg-blue-500 text-white" : "bg-gray-300 text-black"  }`}>
             {msg.text}
           </p>
   
           {msg.media && msg.media.length > 0 && (
-            <div className="media mt-2 flex flex-wrap justify-start gap-2">
+            <div className="media  mt-2 flex flex-wrap justify-between gap-2">
               {msg.media.map((item, idx) => (
                 <div
                   key={idx}
-                  className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2"
+                  className="w-full sm:w-1/2 md:w-1/3 lg:w-5/12 px-2"
                 >
                   <a
                     className="text-blue-600"
@@ -120,7 +120,7 @@ const Chatbox = ( {setshowchatbox}) => {
                       className="w-full h-auto rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
                     />
                   </a>
-                  <span className="block text-black font-medium mb-1">
+                  <span className="block  text-black text-sm font-medium mb-1">
                     {item.title}
                   </span>
                 </div>

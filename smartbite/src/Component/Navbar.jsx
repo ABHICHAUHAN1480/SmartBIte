@@ -3,7 +3,7 @@ import Logo from '../Constant/Logo'
 import { Link, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import Profile from '../Constant/Profile'
-
+import logoname from "../assets/logo_name.png"
 const Navbar = () => {
   const [data, setdata] = useState(null)
   const [showProfile, setShowProfile] = useState(false);
@@ -45,12 +45,13 @@ const Navbar = () => {
 
   return (
 <>
-  <div className="z-20 block w-full bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 fixed shadow-lg">
+  <div className="z-20 block w-full bg-gradient-to-r from-zinc-900 via-zinc-800  to-zinc-900 fixed shadow-lg">
+  
     <div className="py-3 px-4 m-2 rounded-lg flex items-center justify-between">
-      {/* Logo */}
+      
       <Logo />
-
-      {/* Hamburger Menu for Small Screens */}
+       
+     
       <div className="md:hidden flex gap-4 justify-center items-center">
         <button
           onClick={()=>{toggleMenu();setShowProfile(false)}}
@@ -75,7 +76,7 @@ const Navbar = () => {
             </span>
       </div>
 
-      {/* Navigation Links for Desktop */}
+    
       <ul className="hidden md:flex text-[18px] lg:text-[22px] gap-6 lg:gap-12 mx-6">
         <Link to="/">
           <li
@@ -126,7 +127,7 @@ const Navbar = () => {
       </ul>
     </div>
 
-    {/* Mobile Menu with Overlay */}
+ 
     {menuOpen && (
       <div className="fixed inset-0 bg-black bg-opacity-50 z-30">
          
@@ -191,7 +192,7 @@ const Navbar = () => {
     )}
   </div>
 
-  {/* Profile Section */}
+ 
   {showProfile && (
     <Profile
       data={data}

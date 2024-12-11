@@ -250,7 +250,7 @@ const Inventory = () => {
    
 
     {showexpired  && showexpired1 && (
-  <div className="bg-gradient-to-r div3 -100 from-red-600 to-yellow-700 text-white fixed inset-0 z-30 flex justify-center items-center p-4 sm:p-6 md:p-8">
+  <div className="bg-gradient-to-r mt-10 rounded-lg lg:w-9/12 lg:m-auto lg:h-[90vh]  div3 -100 from-red-600 to-yellow-700 text-white fixed inset-0 z-30 flex justify-center items-center p-4 sm:p-6 md:p-8">
     <div className="relative w-full  max-w-3xl bg-opacity-50 rounded-2xl bg-zinc-900 p-6 sm:p-8 shadow-xl overflow-y-auto transform transition-all">
       <span
         className="absolute top-4 right-4 cursor-pointer transition-transform hover:scale-110"
@@ -306,8 +306,8 @@ const Inventory = () => {
 
 {/* Expiring Items Modal */}
 {showexpireing && showexpireing1 && (
-  <div className="bg-gradient-to-r div3 from-green-600 to-blue-600 text-white fixed inset-0 z-30 flex justify-center items-center p-4 sm:p-6 md:p-8">
-    <div className="relative w-full max-w-3xl bg-opacity-50 rounded-2xl bg-zinc-900 p-6 sm:p-8 shadow-xl overflow-y-auto transform transition-all">
+  <div className="bg-gradient-to-r lg:w-9/12 lg:m-auto rounded-lg lg:h-[90vh] div3 from-green-600 to-blue-600 text-white fixed inset-0 z-30 flex justify-center items-center p-4 sm:p-6 md:p-8">
+    <div className="relative w-full  max-w-3xl bg-opacity-50 rounded-2xl bg-zinc-900 p-6 sm:p-8 shadow-xl overflow-y-auto transform transition-all">
       <span
         className="absolute top-4 right-4 cursor-pointer transition-transform hover:scale-110"
         onClick={() => setshowexpireing(false)}
@@ -345,7 +345,7 @@ const Inventory = () => {
   </div>
 )}   
   {/* Inventory Input Section */}
-    <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-zinc-900 text-white p-6 sm:p-12 mx-auto max-w-2xl lg:max-w-4xl rounded-xl shadow-2xl">
+    <div className="bg-gradient-to-r  from-gray-900 via-gray-800 to-zinc-900 text-white p-6 sm:p-12 mx-auto max-w-2xl lg:max-w-4xl rounded-xl shadow-2xl">
   <h2 className="text-3xl sm:text-4xl font-extrabold text-center mb-6 sm:mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-500">
     Add Item to Inventory
   </h2>
@@ -353,9 +353,9 @@ const Inventory = () => {
   {/* Inventory Input Section */}
   <div className="grid grid-cols-1 gap-6 mb-8">
     {/* Item Name and Icon Section */}
-    <div className="flex flex-col  lg:flex-row items-center lg:items-start justify-between gap-3 sm:gap-6">
+    <div className="flex flex-col  lg:flex-row items-center lg:items-center  md:justify-center justify-between gap-3 sm:gap-6">
       {/* Item Name Input */}
-      <div className="flex-1 w-full">
+      <div className="flex-1 w-full justify-center">
         <label className="text-base sm:text-lg  font-semibold text-gray-300 mb-2 block">
           Item Name
         </label>
@@ -371,7 +371,7 @@ const Inventory = () => {
       <span className="text-lg sm:text-2xl font-semibold text-gray-300 lg:mt-4">or</span>
 
       {/* Image Upload/Camera Icons */}
-      <div className="flex gap-4">
+      <div className="flex gap-4 mt-5">
         <div
           onClick={handleimg2}
           className="bg-gray-700 p-2 rounded-3xl cursor-pointer hover:bg-gray-600 transition duration-300 ease-in-out transform hover:scale-105"

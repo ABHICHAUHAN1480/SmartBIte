@@ -79,10 +79,9 @@ useEffect(() => {
    <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-[#1a1a1a] via-[#333] to-[#555] animate-gradient-animate">
   <Navbar />
   <div className="mt-20 mb-20">
-    {/* Hero Section */}
+    
     <div
       className="relative text-center py-20 bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
     >
       <h1 className="text-6xl font-extrabold text-white drop-shadow-md animate-fade-in">
         Welcome to <span className="text-green-500">SmartBite</span>
@@ -168,7 +167,6 @@ useEffect(() => {
           "AI-powered mood analysis",
           "Save favorite meals easily",
         ],
-    
         onClick: gotomoodmeals,
       },
       {
@@ -182,7 +180,7 @@ useEffect(() => {
           "Smart suggestions based on inventory",
           "Sync across devices",
         ],
-        image: "https://via.placeholder.com/150", // Replace with actual image URL
+        image: "https://via.placeholder.com/150",
         onClick: gotoinventory,
       },
       {
@@ -196,7 +194,7 @@ useEffect(() => {
           "BMI-based health tips",
           "Track BMI trends over time",
         ],
-        image: "https://via.placeholder.com/150", // Replace with actual image URL
+        image: "https://via.placeholder.com/150", 
         onClick: gotobmi,
       },
       {
@@ -210,19 +208,19 @@ useEffect(() => {
           "Organize your favorites",
           "Seamless navigation",
         ],
-        onClick: gotoFavoriteRecipes, // Define this function to navigate to the Favorite Recipes page
+        onClick: gotoFavoriteRecipes,
       },
     ].map((card, index) => (
       <div
         key={index}
         className={`relative group flex flex-col lg:flex-row items-center lg:items-start bg-gradient-to-br from-zinc-800 via-zinc-700 to-zinc-800 rounded-lg shadow-lg hover:shadow-2xl transform hover:scale-[1.03] transition-transform duration-500 overflow-hidden border-2 border-transparent hover:border-${card.color}-500`}
       >
-        {/* Background Glow */}
+     
         <div
           className={`absolute inset-0 rounded-lg blur-3xl opacity-0  group-hover:opacity-50 transition-all duration-700 ${card.color === 'yellow' ? 'bg-yellow-500' : (card.color==='purple'?`bg-purple-500`:`bg-${card.color}-500`)}`}
         ></div>
 
-        {/* Left Section (Icon + Image) */}
+        
         <div className="p-0 flex flex-col items-center lg:p-8 md:p-6 sm:p-4  lg:w-1/3">
           <div
             className="text-[100px] lg:text-[175px] md:text-[150px] sm:text-[130px]  text-white drop-shadow-md transform group-hover:rotate-12 group-hover:scale-110 transition-transform duration-500" >
@@ -235,7 +233,7 @@ useEffect(() => {
           /> */}
         </div>
 
-        {/* Right Section (Content + Buttons) */}
+       
         <div className="flex-1 p-8 lg:px-12">
           <h3
             className={`text-4xl  text-${card.color === 'yellow' ? 'yellow-500' : (card.color==='purple'?`purple-500`:`${card.color}-500`)} font-bold mb-4 leading-tight`}
@@ -244,7 +242,6 @@ useEffect(() => {
           </h3>
           <p className="text-lg text-slate-300 mb-6">{card.description}</p>
 
-          {/* Quick Facts */}
           <ul className="list-disc list-inside text-slate-400 mb-6 space-y-2">
             {card.quickFacts.map((fact, factIndex) => (
               <li key={factIndex} className="text-base">
@@ -253,7 +250,7 @@ useEffect(() => {
             ))}
           </ul>
 
-          {/* Buttons */}
+        
           <div className="  flex  flex-col gap-4  sm:flex-row">
             <button
               onClick={card.onClick}
@@ -268,7 +265,7 @@ useEffect(() => {
           </div>
         </div>
 
-        {/* Decorative Circle */}
+     
         <div
           className={`absolute bottom-0 right-0 h-96 w-32 lg:h-48 lg:w-48 rounded-full   ${card.color === 'yellow' ? 'bg-yellow-600' : `bg-${card.color}-600`}  opacity-20 blur-3xl transform scale-125 lg:scale-150`}
         ></div>

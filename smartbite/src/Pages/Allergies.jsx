@@ -63,7 +63,7 @@ const Allergies = () => {
       <img className="absolute h-full w-full object-cover opacity-30" src={oip} />
       <div className="m-auto z-10 div1 bg-opacity-50 rounded-2xl bg-zinc-900">
         <div className="text-[35px] sm:text-[40px] md:text-[55px] text-center mt-16">
-          Allergy hai to btade abhi hi
+          Select Allergy options(if any) 
         </div>
         <div className="flex flex-col justify-around mt-16 sm:mt-24 md:mt-32 gap-5 md:gap-11 items-center">
           <div className="w-full md:w-1/2">

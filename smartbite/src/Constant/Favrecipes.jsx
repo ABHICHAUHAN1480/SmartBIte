@@ -114,7 +114,7 @@ const Favrecipes = ({setSelectedRecipe,selectedRecipe,getFavs,toast,showremove})
               className="hover:text-yellow-400 transition-colors duration-300"
             >
               {i.original}{" "}
-              <span className="text-sm md:text-base text-gray-400 hidden sm:inline italic">
+              <span className="text-sm  md:text-base text-gray-400 hidden sm:inline italic">
                 ({i.originalName})
               </span>
             </li>

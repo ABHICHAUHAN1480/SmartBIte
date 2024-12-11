@@ -189,11 +189,7 @@ const searchRecipes = async () => {
     <div className="mt-36 mb-20">
     <span
           onClick={() => setshowchatbox((prev) => !prev)} className={`fixed z-50 ${!showchatbox ? "bg-gray-900" : "bg-orange-500 hidden"     } flex sm:flex items-center cursor-pointer justify-center w-[70px] h-[70px] md:w-[60px] md:h-[60px] bottom-8 right-8 rounded-full shadow-lg border-2 border-orange-500 hover:border-orange-700 hover:shadow-2xl transform hover:scale-105 transition-all duration-300`} >
-          <img
-            className="w-2/3 p-1 invert transition-transform duration-300 ease-in-out"
-            src={chaticon}
-            alt="Chatbox Icon"
-          />
+          <img  className="w-2/3 p-1 invert transition-transform duration-300 ease-in-out"  src={chaticon} alt="Chatbox Icon" />
         </span>
       <div className="p-6">
         <span

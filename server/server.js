@@ -15,6 +15,7 @@ app.use(cors({
   origin: 'https://smartbite2.vercel.app', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
+// app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 const Fuse = require("fuse.js");
 
@@ -232,10 +233,8 @@ app.post('/api/auth/signup', async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Hash the password before saving it
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user with the hashed password
     const newUser = new User({
       name,
       user,
@@ -243,15 +242,14 @@ app.post('/api/auth/signup', async (req, res) => {
       password: hashedPassword,
     });
 
-    // Save the user
+  
     await newUser.save();
 
-    // Generate a JWT token
+   
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
       expiresIn: '30d',
     });
 
-    // Respond with user data and token
     res.status(201).json({
       _id: newUser._id,
       name: newUser.name,
@@ -898,6 +896,154 @@ app.delete('/fav', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
+  
+app.post("/savemealplan",async(req,res)=>{
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token,process.env.JWT_SECRET);
+    const userId = decoded.id; 
+
+    const {params} = req.body;
+     
+    if (!params) {
+      return res.status(400).json({ error: "No parameters provided" });
+    }
+    if (!params) return res.status(400).json({ error: "No parameters provided" });
+
+    const user = await User.findById(userId);
+    if (!user.diet) {
+      user.diet = {};
+    }
+      user.diet.paramsday=params;
+     await  user.save();
+
+    res.status(200).json({ message: "Meal plan saved successfully!" });
+} catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to save meal plan" });
+}
+})
+app.post("/savemealplanW",async(req,res)=>{
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token,process.env.JWT_SECRET);
+    const userId = decoded.id; 
+
+    const {params} = req.body;
+     
+    if (!params) {
+      return res.status(400).json({ error: "No parameters provided" });
+    }
+    if (!params) return res.status(400).json({ error: "No parameters provided" });
+
+    const user = await User.findById(userId);
+    if (!user.diet) {
+      user.diet = {}; 
+    }
+      user.diet.paramsweek=params;
+     await  user.save();
+
+    res.status(200).json({ message: "Meal plan saved successfully!" });
+} catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to save meal plan" });
+}
+})
+app.get('/savemealplan', async (req, res) => {
+  try {
+    const { timeframe } = req.query; 
+
+    if (!timeframe || (timeframe !== 'day' && timeframe !== 'week')) {
+      return res.status(400).json({ error: "Invalid or missing timeframe. Must be 'day' or 'week'." });
+    }
+
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.id;
+
+    const user = await User.findById(userId);
+    
+    if (!user || !user.diet || !user.diet[`params${timeframe}`]) {
+      return res.status(400).json({ error: `No diet parameters found for timeframe '${timeframe}'` });
+    }
+
+    const params = user.diet[`params${timeframe}`]; // Dynamically access 'paramsday' or 'paramsweek'
+
+    const response = await fetch(`https://api.spoonacular.com/mealplanner/generate?${params}&apiKey=${process.env.SPOONACULAR_API_KEY}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch meal plan from Spoonacular: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    const mealPlan = {};
+    if (timeframe === 'week' && data.week) {
+      Object.keys(data.week).forEach((day) => {
+        mealPlan[day] = data.week[day].meals.map((meal) => ({
+          id: meal.id,
+          title: meal.title,
+          image: `https://spoonacular.com/recipeImages/${meal.id}-312x231.jpg`,
+          time: meal.readyInMinutes,
+          serving: meal.servings,
+          url: meal.sourceUrl,
+        }));
+      });
+    } else if (timeframe === 'day' && data.meals) {
+      mealPlan.day = data.meals.map((meal) => ({
+        id: meal.id,
+        title: meal.title,
+        image: `https://spoonacular.com/recipeImages/${meal.id}-312x231.jpg`,
+        time: meal.readyInMinutes,
+        serving: meal.servings,
+        url: meal.sourceUrl,
+      }));
+    }
+
+    res.json(mealPlan);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch meal plan." });
+  }
+});
+
+app.delete('/deletemealplan', async (req, res) => {
+  try {
+    const { timeframe } = req.query;
+
+    if (!timeframe || (timeframe !== 'day' && timeframe !== 'week')) {
+      return res.status(400).json({ error: "Invalid or missing timeframe. Must be 'day' or 'week'." });
+    }
+
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      return res.status(401).json({ error: "Authorization token is missing." });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.id;
+
+    const user = await User.findById(userId);
+    if (!user || !user.diet || !user.diet[`params${timeframe}`]) {
+      return res.status(400).json({ error: `No meal plan found for timeframe '${timeframe}'` });
+    }
+
+    
+    await User.updateOne(
+      { _id: userId },
+      { $unset: { [`diet.params${timeframe}`]: "" } }
+    );
+    await user.save();
+    res.status(200).json({ message: `Meal plan for '${timeframe}' removed successfully.` });
+  } catch (error) {
+    console.error("Error deleting meal plan:", error);
+    res.status(500).json({ error: "Failed to delete meal plan." });
+  }
+});
+
+
+
 
 
 app.listen(PORT, () => {
