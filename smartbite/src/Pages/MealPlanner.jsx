@@ -140,6 +140,38 @@ const MealPlanner = () => {
           console.error("Error:", error);
         }
       };
+      const handleSaveDiet = async () => {
+        const params = prams; 
+        const token = localStorage.getItem("token");
+        if (!token) throw new Error("You must log in to fetch meal plans.");
+        let response; 
+    
+        if (time === "day") {
+            response = await fetch(`http://localhost:3001/savemealplan`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ params }),
+            });
+        } else if (time === "week") {
+            response = await fetch(`http://localhost:3001/savemealplanW`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ params }),
+            });
+        }
+    
+        if (!response.ok) throw new Error("Failed to Save meal plan.");
+        const data = await response.json();
+        toast(data.message); 
+        setprams(""); 
+        settime(""); 
+    };
     
 
     return (<>
