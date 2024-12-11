@@ -11,10 +11,13 @@ const axios = require("axios");
 const app = express();
 const bodyParser = require("body-parser");
 const PORT = process.env.port||3001;
-app.use(cors({
-  origin: 'https://smartbite2.vercel.app', 
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-}));
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 // app.use(cors());
 //CHOTA CHANGE
 app.use(express.urlencoded({ extended: true }));
