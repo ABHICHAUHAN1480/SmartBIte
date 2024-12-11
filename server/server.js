@@ -16,6 +16,7 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
 // app.use(cors());
+//CHOTA CHANGE
 app.use(express.urlencoded({ extended: true }));
 const Fuse = require("fuse.js");
 
