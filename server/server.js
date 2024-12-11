@@ -11,13 +11,10 @@ const axios = require("axios");
 const app = express();
 const bodyParser = require("body-parser");
 const PORT = process.env.port||3001;
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+app.use(cors({
+  origin: 'https://smartbite2.vercel.app', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+}));
 // app.use(cors());
 //CHOTA CHANGE
 app.use(express.urlencoded({ extended: true }));
@@ -218,7 +215,7 @@ app.get('/mealplan', async (req, res) => {
 
 
 app.use(express.json()); 
-
+console.log(process.env.MONGO_URI);
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error(err));
@@ -272,6 +269,7 @@ app.post('/api/auth/signup', async (req, res) => {
 app.post('/api/auth/login', async (req, res) => {
   const { user, password } = req.body;
   try {
+  
     const foundUser = await User.findOne({ user });
    
    
