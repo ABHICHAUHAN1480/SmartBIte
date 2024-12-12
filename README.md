@@ -1,6 +1,23 @@
 #### This is a SmartBite-AI POWERED DIET PLANNER.
 #### Live link -(https://smartbite2.vercel.app/)
 
+## HOME PAGE
+![image](https://github.com/user-attachments/assets/865556bd-4df7-420f-96ea-9ede8aace33a)
+
+
+## RECIPE HOME PAGE with CHATBOT
+![image](https://github.com/user-attachments/assets/8dae7bd2-d593-4457-b0b4-a60db0ad0465)
+
+
+## INVENTORY PAGE
+![image](https://github.com/user-attachments/assets/455e0541-7dd8-4c24-a07a-bf75f35d205c)
+
+
+## FAVOURITES RECIPE SECTION
+![image](https://github.com/user-attachments/assets/22e4a7fa-3860-4c85-9251-5272d61f27a0)
+
+
+
 
 ## Features
 1. **User Authentication**:  
