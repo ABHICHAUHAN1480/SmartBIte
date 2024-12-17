@@ -100,7 +100,7 @@ app.get("/recipemaker", async (req, res) => {
   try {
     // &cuisine=Indian   gger lhgana hai to lga lena
     const response = await fetch(
-      `https://api.spoonacular.com/recipes/complexSearch?includeIngredients=${encodeURIComponent(ingredients)}&number=5${diet ? `&diet=${diet}` : ""}&excludeIngredients=beef,pork&cuisine=Indian&apiKey=${process.env.SPOONACULAR_API_KEY}`
+      `https://api.spoonacular.com/recipes/complexSearch?includeIngredients=${encodeURIComponent(ingredients)}&number=5${diet ? `&diet=${diet}` : ""}&excludeIngredients=beef,pork&apiKey=${process.env.SPOONACULAR_API_KEY}`
     );
 
     if (!response.ok) {

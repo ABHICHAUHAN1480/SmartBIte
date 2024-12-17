@@ -12,16 +12,20 @@ const Login = () => {
     setform({ ...form, [e.target.name]: e.target.value })
    
   }
+  const [loading, setloading] = useState(false);
   
 
   const handleSubmit = async (e) => {
+    setloading(true);
     e.preventDefault();
     try {
       const response = await axios.post("https://smartbite-g813.onrender.com/api/auth/login", form);
+      setloading(false);
       localStorage.setItem("token", response.data.token);
       alert("Login successful!");
       navigate("/")
     } catch (error) {
+      setloading(false);
       if (error.response && error.response.status === 401) {
         alert("Invalid credentials, please try again.");
       } else {
@@ -32,6 +36,20 @@ const Login = () => {
   
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
+                    {loading && (
+                    <div className="fixed inset-0 z-50  flex items-center justify-center bg-black bg-opacity-50">
+                        <div className="flex flex-col items-center gap-4">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/dupxuoaa.json"
+                                trigger="loop"
+                                state="loop-transparency"
+                                colors="primary:#ffffff"
+                                style={{ width: 80, height: 80 }}
+                            ></lord-icon>
+                            <span className="text-white text-lg font-medium">Loading, please wait...</span>
+                        </div>
+                    </div>
+                )}
     <div className="bg-zinc-950 h-screen flex items-center justify-center">
       <img 
         className="absolute w-full h-full object-cover opacity-20" 
@@ -42,7 +60,7 @@ const Login = () => {
         <h1 className="text-center text-2xl sm:text-3xl text-slate-100 font-bold mb-6">
           Log in
         </h1>
-        <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
+        <form className="flex flex-col space-y-4" onSubmit={handleSubmit} >
           <input 
             onChange={HandleChange} 
             className="text-[16px] md:text-[18px] text-slate-50 rounded-md p-3 outline-none bg-zinc-800 focus:ring focus:ring-blue-500 transition" 

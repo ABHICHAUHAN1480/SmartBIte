@@ -94,11 +94,8 @@ function App() {
  
   return (
     
-    <div className='cursor-default' >
-     
+    <div className='cursor-default'>
      <RouterProvider router={router}/>
-      
-        
        
     </div>
     
