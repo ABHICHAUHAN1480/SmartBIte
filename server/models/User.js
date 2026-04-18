@@ -16,10 +16,10 @@ const userSchema = mongoose.Schema({
   diet:dietSchema
 });
 userSchema.pre('save', async function (next) {
-  if (this.isModified('password')) {
+  if (!this.isModified('password')) {
     return next();
   }
-  const hashedPassword =  bcrypt.hash(this.password, 10);
+  const hashedPassword = await bcrypt.hash(this.password, 10);
   this.password = hashedPassword;
   next();
 });

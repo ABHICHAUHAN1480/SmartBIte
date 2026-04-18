@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
-import Navbar from '../Component/Navbar'
-import Footer from '../Component/Footer'
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 import mood from '../assets/mood3.jpg'
 import m3 from '../assets/m3.jpg'
 import m5 from '../assets/m5.jpg'
 import inv from '../assets/inventory.jpg'
 import del from '../assets/fire.svg'
 
-import Ring from '../Constant/Ring'
-import  NutritionalGraphs from '../Constant/BarGraphs'
+import Ring from '../components/Ring'
+import  NutritionalGraphs from '../components/BarGraphs'
 import { useNavigate } from 'react-router-dom'
 import { useRef } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
@@ -292,3 +292,5 @@ useEffect(() => {
 }
 
 export default Home
+
+

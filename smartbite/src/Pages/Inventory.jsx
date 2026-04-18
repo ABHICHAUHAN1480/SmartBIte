@@ -1,18 +1,19 @@
 import React from 'react'
 import { useState, useEffect, useRef } from 'react'
-import Navbar from '../Component/Navbar'
-import Footer from '../Component/Footer'
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 import add from '../assets/add.svg'
-import Table from '../Constant/Table'
+import Table from '../components/Table'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import inv from '../assets/inv.jpg'
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom'
-import ImageUpload from '../Constant/ImageUpload'
-import Camera from '../Constant/Camera'
+import ImageUpload from '../components/ImageUpload'
+import Camera from '../components/Camera'
 import expiredimg from "../assets/expired.jpg"
 import { useLocation } from "react-router-dom";
+import { inventoryApi } from '../api/smartbiteApi';
 
 const Inventory = () => {
 
@@ -33,28 +34,15 @@ const Inventory = () => {
   }
 
   const getitems = async () => {
-    const token = localStorage.getItem("token");
-  
-    if (!token) {
+    if (!localStorage.getItem("token")) {
       toast("No token found. Please login again.");
       setTimeout(() => navigate("/login"), 3000);
       return;
     }
   
     try {
-      const res = await fetch("https://smartbite-g813.onrender.com/items", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
-      if (!res.ok) {
-        throw new Error("Failed to fetch items.");
-      }
-  
-      const user = await res.json();
+      const res = await inventoryApi.getItems();
+      const user = res.data;
       const presentdata = user.items;
       const today = new Date().toISOString().split("T")[0]; 
   
@@ -71,19 +59,8 @@ const Inventory = () => {
           setshowexpired1(true) 
   
           try {
-         
-            const updateResponse = await fetch("https://smartbite-g813.onrender.com/update-items", {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify({
-                previousdate: today, 
-              }),
-            });
-  
-            if (!updateResponse.ok) {
+            const updateResponse = await inventoryApi.updateItemsDate({ previousdate: today });
+            if (updateResponse.status >= 400) {
               throw new Error("Failed to update items and previousdate.");
             }
   
@@ -174,24 +151,15 @@ const Inventory = () => {
       const timeDifference = expiryDate - today;
       const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
 
-      const token = localStorage.getItem('token');
-      let res = await fetch("https://smartbite-g813.onrender.com/items", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          item: form.item,
-          expire: form.expire,
-          quantity: form.quantity,
-          unit:form.unit,
-          id: uuidv4(),
-          daysLeft: daysLeft
-        })
+      const res = await inventoryApi.addItem({
+        item: form.item,
+        expire: form.expire,
+        quantity: form.quantity,
+        unit:form.unit,
+        id: uuidv4(),
+        daysLeft: daysLeft
       });
-
-      const newItem = await res.json();
+      const newItem = res.data;
       setdata([...data, { ...newItem, expire: new Date(form.expire).toLocaleDateString(), daysLeft }]);
       setform({ item: "", expire: "", quantity: "",unit:"" });
     }
@@ -204,17 +172,8 @@ const Inventory = () => {
   }
   async function handledelete(id) {
     try {
-      const token = localStorage.getItem('token');
-      const res = await fetch("https://smartbite-g813.onrender.com/items", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ id }),
-      });
-
-      if (res.ok) {
+      const res = await inventoryApi.deleteItem({ id });
+      if (res.status < 400) {
         setdata((prevData) => prevData.filter((item) => item.id !== id)); // Update state to remove the deleted item
       } else {
         console.error("Failed to delete item");
@@ -490,3 +449,5 @@ const Inventory = () => {
 }
 
 export default Inventory
+
+

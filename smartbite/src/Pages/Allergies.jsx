@@ -4,7 +4,7 @@ import oip from "../assets/OIP.jpeg"
 import { useState,useEffect,useRef } from 'react'
 import Login from './Login'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios';
+import { userApi } from '../api/smartbiteApi';
 const Allergies = () => {
 
   let s1 = [
@@ -38,16 +38,7 @@ const Allergies = () => {
   };
   const handleSave = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(
-        'https://smartbite-g813.onrender.com/allergies',
-        { allergies: Array.from(s3) },  // Convert Set to array
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await userApi.saveAllergies({ allergies: Array.from(s3) });
       
     } catch (error) {
       console.error('Error saving allergies:', error.response?.data || error.message);
@@ -113,3 +104,5 @@ const Allergies = () => {
 }
 
 export default Allergies
+
+

@@ -1,22 +1,21 @@
-import { useState ,useEffect} from 'react'
-import {createBrowserRouter,BrowserRouter,RouterProvider} from "react-router-dom";    
-import Home from './Pages/Home'
-import Login from './Pages/Login'
-import Signup from './Pages/Signup'
-import Inventory from './Pages/Inventory';
-import Meal_Mood from './Pages/Meal_Mood';
-import BMICalculator from './Pages/BMI';
-import RecipeMaker from './Component/RecipeMaker';
-import Profile from './Constant/Profile';
-import Allergies from './Pages/Allergies';
-import Mood from './Pages/Mood';
-import Lately from './Pages/Lately';
-import ImageUpload from './Constant/ImageUpload';
-import Recipe2 from './Constant/Recipe2';
-import RecipeSearch from './Constant/RecipeSearch';
-import Chatbox from './Constant/Chatbox';
-import Favourite from './Pages/Favourite';
-import MealPlanner from './Pages/MealPlanner';
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
+import Inventory from './pages/Inventory';
+import Meal_Mood from './pages/Meal_Mood';
+import BMICalculator from './pages/BMI';
+import RecipeMaker from './components/RecipeMaker';
+import Profile from './components/Profile';
+import Allergies from './pages/Allergies';
+import Mood from './pages/Mood';
+import Lately from './pages/Lately';
+import ImageUpload from './components/ImageUpload';
+import Recipe2 from './components/Recipe2';
+import RecipeSearch from './components/RecipeSearch';
+import Chatbox from './components/Chatbox';
+import Favourite from './pages/Favourite';
+import MealPlanner from './pages/MealPlanner';
 
 
 
@@ -94,7 +93,7 @@ function App() {
  
   return (
     
-    <div className='cursor-default'>
+    <div className='cursor-default selection:bg-emerald-300/40 selection:text-emerald-950'>
      <RouterProvider router={router}/>
        
     </div>
@@ -102,3 +101,5 @@ function App() {
   )
 }
 export default App
+
+

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../Component/Navbar';
-import Footer from '../Component/Footer';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import happy from "../assets/emojies/happy.svg"
@@ -12,7 +12,7 @@ import pasta from "../assets/pasta.jpg"
 import soup from "../assets/soup.webp"
 import desert from "../assets/desert.jpg"
 import chaticon from "../assets/chatboxicon.svg"
-import Chatbox from '../Constant/Chatbox';
+import Chatbox from '../components/Chatbox';
 const Meal_Mood = () => {
   const [mealPlan, setMealPlan] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -235,3 +235,5 @@ const Meal_Mood = () => {
 };
 
 export default Meal_Mood;
+
+

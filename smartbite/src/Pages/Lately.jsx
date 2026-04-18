@@ -5,7 +5,7 @@ import oip from "../assets/bg.jpg"
 import { useState,useEffect,useRef } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
-import Recipe2 from '../Constant/Recipe2'
+import Recipe2 from '../components/Recipe2'
 const Lately = () => {
   const location = useLocation();
   const { moodLevel, moodText } = location.state || {};
@@ -114,3 +114,5 @@ const handlecross=()=>{
 }
 
 export default Lately
+
+

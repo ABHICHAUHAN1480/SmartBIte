@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import Navbar from "../Component/Navbar";
-import Footer from "../Component/Footer";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import Favrecipes from "../Constant/Favrecipes";
+import Favrecipes from "../components/Favrecipes";
 import axios from "axios";
+import { mealPlanApi, recipesApi } from '../api/smartbiteApi';
 const MealPlanner = () => {
   const [mealPlan, setMealPlan] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -32,14 +33,7 @@ const MealPlanner = () => {
     }
 
     try {
-      const response = await fetch("https://smartbite-g813.onrender.com/fav", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ id }), // Shorthand syntax
-      });
+      const response = await recipesApi.addFavorite(id);
 
       if (!response.ok) {
         const errorData = await response.json(); // Parse server error response
@@ -48,7 +42,7 @@ const MealPlanner = () => {
         return;
       }
 
-      const data = await response.json();
+      const data = response.data;
 
       if (!data.success) {
         toast.error(data.message)
@@ -79,20 +73,8 @@ const MealPlanner = () => {
       settime(timeFrame)
       setprams(params.toString());
 
-      const response = await fetch(
-        `https://smartbite-g813.onrender.com/mealplan?${params.toString()}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!response.ok) throw new Error("Failed to fetch meal plan.");
-
-      const data = await response.json();
+      const response = await mealPlanApi.generate({ timeFrame, targetCalories, diet, exclude });
+      const data = response.data;
       setshowsaved(false);
       setMealPlan(data);
 
@@ -134,9 +116,7 @@ const MealPlanner = () => {
   const handlerecipe = async (id) => {
     try {
       setLoading(true)
-      const response = await axios.get("https://smartbite-g813.onrender.com/getrecipe", {
-        params: { id },
-      });
+      const response = await recipesApi.getRecipeById(id);
       setSelectedRecipe(response.data);
 
       setLoading(false)
@@ -154,27 +134,13 @@ const MealPlanner = () => {
     let response;
 
     if (time === "day") {
-      response = await fetch(`https://smartbite-g813.onrender.com/savemealplan`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ params }),
-      });
+      response = await mealPlanApi.saveDay(params);
     } else if (time === "week") {
-      response = await fetch(`https://smartbite-g813.onrender.com/savemealplanW`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ params }),
-      });
+      response = await mealPlanApi.saveWeek(params);
     }
 
-    if (!response.ok) throw new Error("Failed to Save meal plan.");
-    const data = await response.json();
+    if (response.status >= 400) throw new Error("Failed to Save meal plan.");
+    const data = response.data;
     toast(data.message);
     setprams("");
     setsaved(true);
@@ -184,15 +150,9 @@ const MealPlanner = () => {
     const token = localStorage.getItem("token");
     if (!token) throw new Error("You must log in to fetch meal plans.");
 
-    const response = await fetch(`https://smartbite-g813.onrender.com/savemealplan?timeframe=${e}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await response.json();
-    if (!response.ok){
+    const response = await mealPlanApi.getSaved(e);
+    const data = response.data;
+    if (response.status >= 400){
       toast(data.error || "Failed to fetch meal plan.");
       return;
     }
@@ -207,17 +167,10 @@ const MealPlanner = () => {
     }
 
     try {
-      const response = await fetch(`https://smartbite-g813.onrender.com/deletemealplan?timeframe=${timeframe}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await mealPlanApi.deleteSaved(timeframe);
+      const data = response.data;
 
-      const data = await response.json();
-
-      if (!response.ok) {
+      if (response.status >= 400) {
         toast(data.error || "Failed to delete meal plan.");
         return;
       }
@@ -418,3 +371,5 @@ const MealPlanner = () => {
 };
 
 export default MealPlanner;
+
+

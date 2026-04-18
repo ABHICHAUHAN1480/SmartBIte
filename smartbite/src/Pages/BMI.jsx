@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import bmiimg from '../assets/bmi.jpeg';
-import axios from 'axios';
+import { userApi } from '../api/smartbiteApi';
 
 const BMICalculator = () => {
   const [weight, setWeight] = useState(70);
@@ -57,12 +57,7 @@ const BMICalculator = () => {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(
-        'https://smartbite-g813.onrender.com/bmi',
-        { weight, height, gender, bmiCategory, bmi },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const response = await userApi.saveBmi({ weight, height, gender, bmiCategory, bmi });
       setSavedBMI([...savedBMI, response.data]);
       alert('BMI saved successfully');
       navigate('/allergies');
@@ -75,19 +70,10 @@ const BMICalculator = () => {
   };
   useEffect(() => {
     const fetchUserData = async () => {
-      const token = localStorage.getItem("token");
-  
       try {
-        const res = await fetch("https://smartbite-g813.onrender.com/userdata", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-  
-        if (res.ok) {
-          const userData = await res.json();
+        const res = await userApi.getUserData();
+        if (res.status === 200) {
+          const userData = res.data;
           console.log(userData.info.bmi)
           setdata(true);
          
@@ -261,3 +247,5 @@ const BMICalculator = () => {
 };
 
 export default BMICalculator;
+
+

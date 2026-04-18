@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import Navbar from '../Component/Navbar';
-import Chatbox from '../Constant/Chatbox';
-import Footer from '../Component/Footer';
+import Navbar from '../components/Navbar';
+import Chatbox from '../components/Chatbox';
+import Footer from '../components/Footer';
 import chaticon from "../assets/chatboxicon.svg";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import Favrecipes from '../Constant/Favrecipes';
+import Favrecipes from '../components/Favrecipes';
 import unlike from '../assets/unlike.svg'
+import { recipesApi } from '../api/smartbiteApi';
 const Favourite = () => {
     const [showchatbox, setshowchatbox] = useState(false);
     const [recipes, setRecipes] = useState([]);
@@ -43,19 +44,11 @@ const Favourite = () => {
             return;
         }
         try {
-            const res = await fetch("https://smartbite-g813.onrender.com/fav", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
-            if (!res.ok) {
+            const res = await recipesApi.getFavorites();
+            if (res.status >= 400) {
                 throw new Error("Failed to fetch items.");
             }
-
-            const user = await res.json();
+            const user = res.data;
             if(user.length===0){
                 toast("Add some recipes first ");
                 setSelectedRecipe(null)
@@ -82,15 +75,8 @@ const Favourite = () => {
             return;
         }
         try {
-            const res = await fetch("https://smartbite-g813.onrender.com/fav", {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({ id }),
-            });
-            if (!res.ok) {
+            const res = await recipesApi.deleteFavorite(id);
+            if (res.status >= 400) {
                 throw new Error("Failed to Delete  items.");
             }
             toast("Recipe removed sucessfully")
@@ -258,3 +244,5 @@ const Favourite = () => {
 };
 
 export default Favourite;
+
+
